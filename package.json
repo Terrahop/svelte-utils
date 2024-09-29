@@ -1,5 +1,5 @@
 {
-	"name": "@terrahop/svelte-components",
+	"name": "@terrahop/svelte-utils",
 	"version": "1.0.0",
 	"scripts": {
 		"dev": "vite dev",
