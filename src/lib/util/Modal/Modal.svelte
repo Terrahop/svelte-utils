@@ -25,7 +25,7 @@
   import { prefersReducedMotion } from '../../stores/index.js'
   import { focusTrap } from '../../actions/index.js'
 
-  import { getModalStore } from './modal.svelte'
+  import { getModalStore } from './modal.svelte.js'
   import type { ModalComponent, ModalSettings } from './types.js'
 
   // Props (components)
