@@ -1,4 +1,4 @@
-import { type ToastItem } from './toast.svelte';
+import { type ToastItem } from './toast.svelte.js';
 import type { Snippet } from 'svelte';
 declare const Toast: import("svelte").Component<{
     rootCss?: string;
