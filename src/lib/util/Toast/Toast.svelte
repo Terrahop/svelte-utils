@@ -1,6 +1,6 @@
 <script lang="ts">
   import { SvelteMap } from 'svelte/reactivity'
-  import { toasts, type ToastItem } from './toast.svelte'
+  import { toasts, type ToastItem } from './toast.svelte.js'
   import type { Snippet } from 'svelte'
 
   interface ToastProps {
