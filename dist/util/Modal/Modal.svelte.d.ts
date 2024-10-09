@@ -20,6 +20,7 @@ declare class __sveltets_Render<TransitionIn extends Transition = FlyTransition,
         buttonTextCancel?: string | undefined;
         buttonTextConfirm?: string | undefined;
         buttonTextSubmit?: string | undefined;
+        buttonSize?: string | undefined;
         regionBackdrop?: string | undefined;
         regionHeader?: string | undefined;
         regionBody?: string | undefined;
