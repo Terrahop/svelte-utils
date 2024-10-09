@@ -65,6 +65,8 @@
   export let buttonTextConfirm = 'Confirm'
   /** Override the text for the Submit button. */
   export let buttonTextSubmit = 'Submit'
+  /** Override the default btn sizes. */
+  export let buttonSize = 'btn-sm'
 
   // Props (regions)
   /** Provide arbitrary classes to the backdrop region. */
@@ -282,13 +284,13 @@
             {#if $modalStore[0].type === 'alert'}
               <!-- Template: Alert -->
               <footer class="modal-footer {regionFooter}">
-                <button type="button" class="btn {buttonNeutral}" on:click={onClose}>{buttonTextCancel}</button>
+                <button type="button" class="btn {buttonSize} {buttonNeutral}" on:click={onClose}>{buttonTextCancel}</button>
               </footer>
             {:else if $modalStore[0].type === 'confirm'}
               <!-- Template: Confirm -->
               <footer class="modal-footer {regionFooter}">
-                <button type="button" class="btn md:btn-sm {buttonNeutral}" on:click={onClose}>{buttonTextCancel}</button>
-                <button type="button" class="btn md:btn-sm {buttonPositive}" on:click={onConfirm}>{buttonTextConfirm}</button>
+                <button type="button" class="btn {buttonSize} {buttonNeutral}" on:click={onClose}>{buttonTextCancel}</button>
+                <button type="button" class="btn {buttonSize} {buttonPositive}" on:click={onConfirm}>{buttonTextConfirm}</button>
               </footer>
             {:else if $modalStore[0].type === 'prompt'}
               <!-- Template: Prompt -->
@@ -301,8 +303,8 @@
                   {...$modalStore[0].valueAttr}
                 />
                 <footer class="modal-footer {regionFooter}">
-                  <button type="button" class="btn md:btn-sm {buttonNeutral}" on:click={onClose}>{buttonTextCancel}</button>
-                  <button type="submit" class="btn md:btn-sm {buttonPositive}" disabled={promptValid}>{buttonTextSubmit}</button>
+                  <button type="button" class="btn {buttonSize} {buttonNeutral}" on:click={onClose}>{buttonTextCancel}</button>
+                  <button type="submit" class="btn {buttonSize} {buttonPositive}" disabled={promptValid}>{buttonTextSubmit}</button>
                 </footer>
               </form>
             {/if}
