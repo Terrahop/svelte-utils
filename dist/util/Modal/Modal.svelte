@@ -101,7 +101,7 @@
   export let transitionOutParams: TransitionParams<TransitionOut> = { duration: 150, opacity: 0, x: 0, y: 100 }
 
   // Base Styles
-  const cBackdrop = 'fixed z-0 top-0 left-0 right-0 bottom-0 bg-base-200/60 p-4 backdrop-blur-sm'
+  const cBackdrop = 'fixed z-0 top-0 left-0 right-0 bottom-0 bg-base-200/60 p-4'
   const cTransitionLayer = 'w-full h-fit min-h-full overflow-y-auto flex justify-center'
   const cModal = 'block overflow-y-auto' // max-h-full overflow-y-auto overflow-x-hidden
   const cModalImage = 'w-full h-auto'
