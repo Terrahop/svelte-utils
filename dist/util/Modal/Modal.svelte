@@ -71,6 +71,8 @@
   // Props (regions)
   /** Provide arbitrary classes to the backdrop region. */
   export let regionBackdrop = ''
+  /** Provide arbitrary classes to transition region. */
+  export let regionTransition = ''
   /** Provide arbitrary classes to modal header region. */
   export let regionHeader = 'text-2xl font-bold'
   /** Provide arbitrary classes to modal body region. */
@@ -199,7 +201,7 @@
   $: cPosition = $modalStore[0]?.position ?? position
   // Reactive
   $: classesBackdrop = `${cBackdrop} ${regionBackdrop} ${zIndex} ${$$props.class ?? ''} ${$modalStore[0]?.backdropClasses ?? ''}`
-  $: classesTransitionLayer = `${cTransitionLayer} ${cPosition ?? ''}`
+  $: classesTransitionLayer = `${cTransitionLayer} ${regionTransition} ${cPosition ?? ''}`
   $: classesModal = `${cModal} ${background} ${width} ${height} ${padding} ${spacing} ${rounded} ${shadow} ${
     $modalStore[0]?.modalClasses ?? ''
   }`
