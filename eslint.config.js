@@ -5,7 +5,8 @@ export default [
   {
     rules: {
       'eslint-comments/require-description': 'off',
-      'eslint-comments/disable-enable-pair': 'off'
+      'eslint-comments/disable-enable-pair': 'off',
+      'unicorn/no-abusive-eslint-disable': 'off'
     }
   },
 	{

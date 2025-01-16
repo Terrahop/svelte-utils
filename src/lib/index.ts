@@ -1,15 +1,15 @@
-import { setContext } from "svelte"
-import type { PopupSettings } from "./actions/popup.js"
+import { setContext } from 'svelte'
+import type { PopupSettings } from './actions/popup.js'
 
 const defaultsKey = Symbol('defaults')
 
 type ExtractMerge<T extends string> = T extends `${string}Merge` ? T : never
 
 /**
- * Default Element values. Most defaults have a 'merge' value which, when used, 
- * will merge that class value with the individual elements class value, otherwise if the 
+ * Default Element values. Most defaults have a 'merge' value which, when used,
+ * will merge that class value with the individual elements class value, otherwise if the
  * regular value is used it will be replaced by the individual elements class value.
- * */
+ */
 export interface Defaults {
   popup?: {
     /** Style the root toggle wrapper element. */
@@ -22,11 +22,13 @@ export interface Defaults {
     /** Style the root popup element. Preferrably style `cContent` if possible. */
     cPopup?: string
     cPopupMerge?: string
-    /** Should the popup container be set to hidden when closed.
+    /**
+     * Should the popup container be set to hidden when closed.
      * @default false
      */
     closeHidden?: boolean
-    /** Popup z index
+    /**
+     * Popup z index.
      * @default 'z-20'
      */
     cZ?: string

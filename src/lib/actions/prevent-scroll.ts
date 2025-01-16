@@ -5,13 +5,13 @@ const preventScrollFunc = (e: WheelEvent) => {
 }
 
 /**
- * A svelte action to prevent scroll behaviour on target element
+ * A svelte action to prevent scroll behaviour on target element.
  * @param node - HTML element to attach to.
- * @param enabled - .
+ * @param enabled - Is enabled. Defaults to true.
  * @example ```svelte
- * <div use:preventScroll /> 
+ * <div use:preventScroll />
  * <!-- Disabled -->
- * <div use:preventScroll={false} /> 
+ * <div use:preventScroll={false} />
  * ```
  */
 export const preventScroll = (node: HTMLElement, enabled = true): ActionReturn<boolean> => {

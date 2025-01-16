@@ -15,7 +15,7 @@ Parent element must be relatively positioned to work.
     position?: string
     class?: string
   }
-  let { color = 'bg-primary', position = 'indicator-top indicator-end', class: className }: Props = $props()
+  const { color = 'bg-primary', position = 'indicator-top indicator-end', class: className }: Props = $props()
 </script>
 
 <span class="{className} absolute {position} z-10 flex size-2.5">

@@ -1,32 +1,32 @@
 /**
  * Force focus of first focusable element (button, a, input etc).
- * Adapted from: https://github.com/skeletonlabs/skeleton/blob/dev/packages/skeleton/src/lib/actions/FocusTrap/focusTrap.ts
+ * Adapted from: https://github.com/skeletonlabs/skeleton/blob/dev/packages/skeleton/src/lib/actions/FocusTrap/focusTrap.ts.
  * @param element - HTML element to attach to.
- * @param callbackFunction - Scan child elements for focusable elements.
+ * @param enabled - Is enabled.
  * @returns Svelte update and destroy callbacks for binding to Svelte's 'use' directive.
  * @example ```svelte
- * <div use:focusTrap={true} /> 
+ * <div use:focusTrap={true} />
  * ```
  */
 export const focusTrap = (element: HTMLElement, enabled: boolean) => {
   const elemWhitelist
     = 'a[href]:not([tabindex="-1"]), button:not([tabindex="-1"]), input:not([tabindex="-1"]), textarea:not([tabindex="-1"]), select:not([tabindex="-1"]), details:not([tabindex="-1"]), [tabindex]:not([tabindex="-1"])'
-  let elemFirst: HTMLElement
-  let elemLast: HTMLElement
+  let elemFirst: HTMLElement | null
+  let elemLast: HTMLElement | null
 
   // When the first element is selected, shift+tab pressed, jump to the last selectable item.
   const onFirstElemKeydown = (e: KeyboardEvent): void => {
     if (e.shiftKey && e.code === 'Tab') {
       e.preventDefault()
-      elemLast.focus()
+      elemLast?.focus()
     }
   }
 
   // When the last item selected, tab pressed, jump to the first selectable item.
-  function onLastElemKeydown(e: KeyboardEvent): void {
+  const onLastElemKeydown = (e: KeyboardEvent) => {
     if (!e.shiftKey && e.code === 'Tab') {
       e.preventDefault()
-      elemFirst.focus()
+      elemFirst?.focus()
     }
   }
 
@@ -49,9 +49,10 @@ export const focusTrap = (element: HTMLElement, enabled: boolean) => {
   const getFocusTrapTarget = (elemFirst: HTMLElement) => {
     // Get elements with data-focusindex attribute
     const focusindexElements = [...element.querySelectorAll<FocusindexElement>('[data-focusindex]')]
-    if (!focusindexElements || focusindexElements.length === 0) return elemFirst
+    if (focusindexElements.length === 0) return elemFirst
     // return smallest focusindex element or elemFirst
     return (
+      // eslint-disable-next-line sonarjs/no-misleading-array-reverse
       focusindexElements.sort((a, b) => {
         return +a.dataset.focusindex - +b.dataset.focusindex
       })[0] || elemFirst
@@ -66,12 +67,12 @@ export const focusTrap = (element: HTMLElement, enabled: boolean) => {
     if (focusableElems.length > 0) {
       // Set first/last focusable elements
       elemFirst = focusableElems[0]
-      elemLast = focusableElems.at(-1) as HTMLElement
+      elemLast = focusableElems.at(-1) as HTMLElement | null
       // Auto-focus focusTrapTarget or first focusable element only when not called from observer
       if (!fromObserver) getFocusTrapTarget(elemFirst).focus()
       // Listen for keydown on first & last element
       elemFirst.addEventListener('keydown', onFirstElemKeydown)
-      elemLast.addEventListener('keydown', onLastElemKeydown)
+      elemLast?.addEventListener('keydown', onLastElemKeydown)
     }
   }
   onScanElements(false)

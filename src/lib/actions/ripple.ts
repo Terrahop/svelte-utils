@@ -65,7 +65,6 @@ export const ripple = createRipple()
 
 export default createRipple
 
-
 /* ----- */
 /* CSS for components with click ripples. */
 /* ----- */

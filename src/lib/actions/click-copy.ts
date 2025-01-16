@@ -1,12 +1,13 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
 /**
- * A svelte action to copy text of a clicked element to the clipboard
- * @param node - HTML element to attach to.
+ * A svelte action to copy text of a clicked element to the clipboard.
+ * @param element - HTML element to attach to.
  * @param params - Optional action params.
  * @param params.target - Optionally provide a target element query selector to get the text content from.
- * @param params.onClick - Optionally provide the callback if text is successfully copied.
+ * @param params.onCopy - Optionally provide the callback if text is successfully copied.
  * @returns Svelte destroy callback for binding to Svelte's 'use' directive.
  * @example ```svelte
- * <div use:clickCopy={{target: '#myelement', onCopy: (v) => console.log(v) }} /> 
+ * <div use:clickCopy={{target: '#myelement', onCopy: (v) => console.log(v) }} />
  * ```
  */
 export const clickCopy = (element: HTMLElement, params?: { target?: string, onCopy?: (v: string) => void }): {
@@ -33,7 +34,6 @@ export const clickCopy = (element: HTMLElement, params?: { target?: string, onCo
           bubbles: true
         })
       )
-
     } catch (error) {
       element.dispatchEvent(
         new CustomEvent('copyerror', {

@@ -1,11 +1,12 @@
-import type { Updater } from "svelte/store"
+import type { StateRune } from '$lib/types.js'
+import type { Updater } from 'svelte/store'
 
 /**
  * Create a simple svelte $state rune with a getter, setter and updater.
  * @param initial - Optional initial value.
  * @returns Svelte state getter and setter.
  */
-export const createState = <T>(initial?: T) => {
+export const createState = <T>(initial?: T): StateRune<T> => {
   let state = $state<T>(initial as T)
   return {
     get get() { return state },

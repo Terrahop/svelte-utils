@@ -1,6 +1,8 @@
+/* eslint-disable */
 import { get, writable, type Writable } from 'svelte/store'
 import type { Placement } from '@floating-ui/dom'
 import { computePosition, autoUpdate, offset, shift, flip, arrow } from '@floating-ui/dom'
+import { random } from '$lib/helpers.js'
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
@@ -27,27 +29,27 @@ export interface Middleware {
 }
 
 export interface PopupSettings {
-  /** 
+  /**
    * Provide the event type.
    * @default 'click'
    */
   event: 'click' | 'hover' | 'focus-blur' | 'focus-click'
   /** Match the popup data value `data-popup="targetNameHere"`. */
   target: string
-  /** 
+  /**
    * Should clicking outside the popup, close the popup.
    * @default true
    */
   outsideClose?: boolean
-  /** 
-   * Set the placement position. 
-   * @default 'bottom-start'. 
+  /**
+   * Set the placement position.
+   * @default 'bottom-start'.
    */
   placement?: Placement
-  /** 
-   * Query elements that close the popup when clicked. 
-   * @default 'a[href], button' 
-   */ 
+  /**
+   * Query elements that close the popup when clicked.
+   * @default 'a[href], button'
+   */
   closeQuery?: string
   /** Optional callback function that reports state change. */
   state?: (event: { state: boolean }) => void
@@ -59,11 +61,11 @@ export interface PopupSettings {
 export const storePopup: Writable<any> = writable()
 
 export const initPopupStore = () => {
-  storePopup.set({ computePosition, autoUpdate, offset, shift, flip, arrow });
+  storePopup.set({ computePosition, autoUpdate, offset, shift, flip, arrow })
 }
 
 export const createTooltip = ({ position }: { position?: Placement }) => {
-  const id = Number.parseInt((Math.random() * 1000).toFixed(0)).toString()
+  const id = random()
   const opts: PopupSettings = {
     event: 'hover',
     target: id,
@@ -77,21 +79,8 @@ export const createTooltip = ({ position }: { position?: Placement }) => {
   }
 }
 
-/** 
- * In order to use the following must be available in the global stylesheet:
- * ```css
- * [data-popup] {
- * 	\\/* https://floating-ui.com/docs/computeposition#usage *\\/
- * 	@apply absolute top-0 left-0 w-max;
- * 	\\/* Set hidden on page load *\\/
- * 	@apply hidden;
- * 	\\/* Transitions *\\/
- * 	@apply transition-opacity duration-150;
- * }
- * ```
- */
 export const popup = (triggerNode: HTMLElement, args: PopupSettings) => {
-  args.outsideClose = args.outsideClose === undefined ? true : args.outsideClose
+  args.outsideClose ??= true
   // Floating UI Modules
   const { computePosition, autoUpdate, offset, shift, flip, arrow, size, autoPlacement, hide, inline } = get(storePopup)
   // Local State
@@ -112,9 +101,6 @@ export const popup = (triggerNode: HTMLElement, args: PopupSettings) => {
   setDomElements() // init
 
   // Render Floating UI Popup
-  /**
-   *
-   */
   const render = (): void => {
     // Error handling for required Floating UI modules
     if (!elemPopup) throw new Error(`The data-popup="${args.target}" element was not found.`)
