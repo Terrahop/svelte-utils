@@ -3,14 +3,13 @@
   "compilerOptions": {
     "allowJs": true,
     "checkJs": true,
-    "removeComments": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "sourceMap": true,
     "strict": true,
-    "module": "ES6",
+    "module": "NodeNext",
     "moduleResolution": "NodeNext",
     "plugins": [
       {
@@ -19,8 +18,5 @@
         "assumeIsSvelteProject": true
       }
     ]
-  },
-  "exclude": [
-    "./dist/"
-  ]
+  }
 }
