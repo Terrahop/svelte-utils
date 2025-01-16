@@ -32,9 +32,6 @@ importers:
       '@terrahop/eslint-config-svelte':
         specifier: github:Terrahop/eslint-config-svelte#v1.2.0
         version: https://codeload.github.com/Terrahop/eslint-config-svelte/tar.gz/f7fdcf302653c34f95ed288a0fd10cce0947593a(@typescript-eslint/parser@8.20.0(eslint@9.18.0(jiti@1.21.6))(typescript@5.7.3))(jiti@1.21.6)(typescript@5.7.3)
-      '@types/lodash':
-        specifier: ^4.17.14
-        version: 4.17.14
       '@types/lodash.merge':
         specifier: ^4.6.9
         version: 4.6.9
