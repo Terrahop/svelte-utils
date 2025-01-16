@@ -11,6 +11,13 @@
 		"sourceMap": true,
 		"strict": true,
 		"module": "ES6",
-		"moduleResolution": "NodeNext"
+		"moduleResolution": "NodeNext",
+    "plugins": [
+      {
+        "name": "typescript-svelte-plugin",
+        "enabled": true,
+        "assumeIsSvelteProject": true
+      }
+    ]
 	}
 }
