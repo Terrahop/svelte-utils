@@ -25,7 +25,7 @@ this version: improved some types, added more docs and refactors styles so they 
 
   // Internal private state.
   let running = false
-  let updater: ReturnType<typeof setInterval> | undefined = undefined
+  let updater: ReturnType<typeof setInterval> | undefined
   let completed = false
   let width = 0
 
@@ -63,7 +63,7 @@ this version: improved some types, added more docs and refactors styles so they 
    *  A div that is currently loading...
    * </div>
    */
-  export let id: string | undefined = undefined
+  export let id: string | undefined
 
   /** Will be set to true when the progress bar is running. */
   export let busy = false
@@ -141,6 +141,7 @@ this version: improved some types, added more docs and refactors styles so they 
     }
     running = true
     updater = setInterval(() => {
+      // eslint-disable-next-line sonarjs/pseudo-random
       const randomStep = stepSizes[Math.floor(Math.random() * stepSizes.length)] ?? 0
       const step = getIncrement(width) + randomStep
       if (width < maximum) {
@@ -216,7 +217,7 @@ this version: improved some types, added more docs and refactors styles so they 
     }
   }
 
-  let progressBarStartTimeout: ReturnType<typeof setTimeout> | undefined = undefined
+  let progressBarStartTimeout: ReturnType<typeof setTimeout> | undefined
   beforeNavigate((nav) => {
     if (progressBarStartTimeout) {
       clearTimeout(progressBarStartTimeout)
