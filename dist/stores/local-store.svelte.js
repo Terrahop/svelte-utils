@@ -1,7 +1,19 @@
 import { isBrowser } from '../helpers.js';
+/**
+ * Get a reference to the storage type.
+ * @param session - Local storage type.
+ * @returns Either session or local storage.
+ */
 const getStorage = (session) => {
+    // eslint-disable-next-line sonarjs/no-selector-parameter
     return session ? sessionStorage : localStorage;
 };
+/**
+ * Get a value for the a storage.
+ * @param session - Local storage type.
+ * @param key - Key to get value for.
+ * @returns Either session or local storage.
+ */
 const getStorageValue = (session, key) => {
     const json = isBrowser ? getStorage(session).getItem(key) ?? undefined : undefined;
     let value;
@@ -50,6 +62,7 @@ const localStoreCreate = () => {
                     for (const [key, value] of Object.entries(stores)) {
                         if (!value)
                             continue;
+                        // Only update the storage if the value has changed
                         if (JSON.stringify(getStorageValue(value.session, key)) !== JSON.stringify(value.value)) {
                             const storage = getStorage(value.session);
                             storage.setItem(key, JSON.stringify(value.value));
@@ -60,4 +73,9 @@ const localStoreCreate = () => {
         }
     };
 };
+/**
+ * A svelte Rune that persists it's state using either the session storage or local storage.
+ * TODO: document.
+ * @returns Rune getters and setters.
+ */
 export const localStore = localStoreCreate();

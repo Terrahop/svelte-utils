@@ -1,4 +1,11 @@
+/* eslint-disable */
 import { localStore } from '../stores/index.js';
+/**
+ * Persist all child form elements.
+ * adapted from: https://github.com/fawaz-alesayi/svelte-use-persist
+ * @param element HTML element to attach to.
+ * @param config Persist config.
+ */
 export function persist(element, config) {
     const _config = {
         persistOn: 'input',

@@ -1,6 +1,22 @@
+// Modal Store Queue
 import { writable } from 'svelte/store';
 import { getContext, setContext } from 'svelte';
 const MODAL_STORE_KEY = 'modalStore';
+/**
+ * Retrieves the `modalStore`.
+ *
+ * This can *ONLY* be called from the **top level** of components!
+ * @example
+ * ```svelte
+ * <script>
+ *  import { getModalStore } from "@skeletonlabs/skeleton";
+ *
+ *  const modalStore = getModalStore();
+ *
+ *  modalStore.trigger({ type: "alert", title: "Welcome!" });
+ * </script>
+ * ```
+ */
 export function getModalStore() {
     const modalStore = getContext(MODAL_STORE_KEY);
     if (!modalStore) {
@@ -8,6 +24,9 @@ export function getModalStore() {
     }
     return modalStore;
 }
+/**
+ * Initializes the `modalStore`.
+ */
 export function initModalStore() {
     const modalStore = modalService();
     return setContext(MODAL_STORE_KEY, modalStore);
@@ -18,12 +37,17 @@ const modalService = () => {
         subscribe,
         set,
         update,
+        /**
+         * Append to end of queue.
+         * @param modal - Modal settings.
+         */
         trigger: (modal) => {
             update((mStore) => {
                 mStore.push(modal);
                 return mStore;
             });
         },
+        /** Remove first item in queue. */
         close: () => {
             update((mStore) => {
                 if (mStore.length > 0)
@@ -31,6 +55,7 @@ const modalService = () => {
                 return mStore;
             });
         },
+        /** Remove all items from queue. */
         clear: () => {
             set([]);
         }

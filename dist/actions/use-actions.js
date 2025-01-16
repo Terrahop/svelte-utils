@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unnecessary-condition */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export const useActions = (node, actions) => {
     const actionReturns = [];
     if (actions) {
