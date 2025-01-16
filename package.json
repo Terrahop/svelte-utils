@@ -59,6 +59,7 @@
 		"@sveltejs/package": "^2.3.7",
 		"@sveltejs/vite-plugin-svelte": "4.0.0",
 		"@terrahop/eslint-config-svelte": "github:Terrahop/eslint-config-svelte#v1.2.0",
+		"@types/lodash.merge": "^4.6.9",
 		"autoprefixer": "^10.4.20",
 		"daisyui": "^4.12.23",
 		"eslint": "^9.18.0",
