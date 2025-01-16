@@ -82,7 +82,7 @@
   /**
    * Enable/Disable transitions.
    */
-  export let transitions = !prefersReducedMotion
+  export let transitions = !prefersReducedMotion.current
   /**
    * Provide the transition used on entry.
    */
