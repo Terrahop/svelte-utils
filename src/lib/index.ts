@@ -15,7 +15,6 @@ export interface Defaults {
     /** Style the root toggle wrapper element. */
     class?: string
     classMerge?: string
-    cMerge?: string
     /** Style the popup content element. */
     cContent?: string
     cContentMerge?: string
@@ -36,7 +35,7 @@ export interface Defaults {
   popupSettings?: Omit<PopupSettings, 'state' | 'middleware'>
 }
 
-export type DefaultPopup = Omit<NonNullable<Defaults['popup']>, ExtractMerge<keyof Defaults['popup']>>
+export type DefaultPopup = Omit<NonNullable<Defaults['popup']>, ExtractMerge<keyof NonNullable<Defaults['popup']>>>
 
 export const setDefaults = (value: Defaults) => {
   setContext<Defaults>(defaultsKey, value)
