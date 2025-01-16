@@ -1,8 +1,7 @@
-export function useActions(node, actions) {
+export const useActions = (node, actions) => {
     const actionReturns = [];
     if (actions) {
-        for (let i = 0; i < actions.length; i++) {
-            const actionEntry = actions[i];
+        for (const actionEntry of actions) {
             const action = Array.isArray(actionEntry) ? actionEntry[0] : actionEntry;
             if (Array.isArray(actionEntry) && actionEntry.length > 1) {
                 actionReturns.push(action(node, actionEntry[1]));
@@ -14,14 +13,13 @@ export function useActions(node, actions) {
     }
     return {
         update(actions) {
-            if (((actions && actions.length) || 0) != actionReturns.length) {
+            if (((actions?.length) ?? 0) !== actionReturns.length) {
                 throw new Error('You must not change the length of an actions array.');
             }
             if (actions) {
-                for (let i = 0; i < actions.length; i++) {
+                for (const [i, actionEntry] of actions.entries()) {
                     const returnEntry = actionReturns[i];
                     if (returnEntry && returnEntry.update) {
-                        const actionEntry = actions[i];
                         if (Array.isArray(actionEntry) && actionEntry.length > 1) {
                             returnEntry.update(actionEntry[1]);
                         }
@@ -33,12 +31,11 @@ export function useActions(node, actions) {
             }
         },
         destroy() {
-            for (let i = 0; i < actionReturns.length; i++) {
-                const returnEntry = actionReturns[i];
+            for (const returnEntry of actionReturns) {
                 if (returnEntry && returnEntry.destroy) {
                     returnEntry.destroy();
                 }
             }
-        },
+        }
     };
-}
+};

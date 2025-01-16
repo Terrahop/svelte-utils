@@ -16,7 +16,7 @@ declare const NavProgress: $$__sveltets_2_IsomorphicComponent<{
     stepSizes?: number[];
     displayThresholdMs?: number;
     noNavigationProgress?: boolean;
-    id?: string | undefined;
+    id: string | undefined;
     busy?: boolean;
     color?: string;
     class?: `text-${string}` | "";

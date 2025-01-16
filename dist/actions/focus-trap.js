@@ -5,15 +5,15 @@ export const focusTrap = (element, enabled) => {
     const onFirstElemKeydown = (e) => {
         if (e.shiftKey && e.code === 'Tab') {
             e.preventDefault();
-            elemLast.focus();
+            elemLast?.focus();
         }
     };
-    function onLastElemKeydown(e) {
+    const onLastElemKeydown = (e) => {
         if (!e.shiftKey && e.code === 'Tab') {
             e.preventDefault();
-            elemFirst.focus();
+            elemFirst?.focus();
         }
-    }
+    };
     const sortByTabIndex = (focusableElems) => {
         return focusableElems
             .filter((elem) => elem.tabIndex >= 0)
@@ -30,7 +30,7 @@ export const focusTrap = (element, enabled) => {
     };
     const getFocusTrapTarget = (elemFirst) => {
         const focusindexElements = [...element.querySelectorAll('[data-focusindex]')];
-        if (!focusindexElements || focusindexElements.length === 0)
+        if (focusindexElements.length === 0)
             return elemFirst;
         return (focusindexElements.sort((a, b) => {
             return +a.dataset.focusindex - +b.dataset.focusindex;
@@ -46,7 +46,7 @@ export const focusTrap = (element, enabled) => {
             if (!fromObserver)
                 getFocusTrapTarget(elemFirst).focus();
             elemFirst.addEventListener('keydown', onFirstElemKeydown);
-            elemLast.addEventListener('keydown', onLastElemKeydown);
+            elemLast?.addEventListener('keydown', onLastElemKeydown);
         }
     };
     onScanElements(false);

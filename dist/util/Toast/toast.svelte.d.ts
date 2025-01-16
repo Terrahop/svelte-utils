@@ -8,11 +8,7 @@ export interface ToastItem {
     action?: (toastId: string) => void;
     actionText?: string;
 }
-export declare const toasts: {
-    get: ToastItem[];
-    set: (instance: ToastItem[]) => ToastItem[];
-    update(updater: import("svelte/store").Updater<ToastItem[]>): void;
-};
+export declare const toasts: import("../../types").StateRune<ToastItem[]>;
 export declare const toast: {
     clear: () => void;
     trigger: ({ title, message, duration, closable, type, action, actionText }: Partial<Omit<ToastItem, "id">>) => string;

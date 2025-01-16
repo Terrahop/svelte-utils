@@ -1,7 +1,7 @@
-export function clickOutside(element, callbackFunction) {
+export function clickOutside(element, callback) {
     const onClick = (event) => {
         if (!element.contains(event.target) && !event.defaultPrevented) {
-            callbackFunction(event);
+            callback(event);
         }
     };
     setTimeout(() => {
@@ -9,7 +9,7 @@ export function clickOutside(element, callbackFunction) {
     }, 50);
     return {
         update(newCallbackFunction) {
-            callbackFunction = newCallbackFunction;
+            callback = newCallbackFunction;
         },
         destroy() {
             document.body.removeEventListener('click', onClick, true);

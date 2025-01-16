@@ -1,7 +1,8 @@
-import { createState } from "../../stores/helpers.svelte";
+import { random } from '../../helpers.js';
+import { createState } from '../../stores/helpers.svelte.js';
 export const toasts = createState([]);
 const trigger = ({ title = '', message = '', duration, closable = true, type = 'success', action, actionText }) => {
-    const id = Math.random().toString();
+    const id = random();
     duration = type === 'error' ? duration ?? 5000 : duration ?? 4000;
     toasts.update((v) => [
         ...v,

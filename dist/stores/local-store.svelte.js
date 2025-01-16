@@ -1,4 +1,4 @@
-import { isBrowser } from "../helpers.js";
+import { isBrowser } from '../helpers.js';
 const getStorage = (session) => {
     return session ? sessionStorage : localStorage;
 };

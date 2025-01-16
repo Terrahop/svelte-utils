@@ -1,5 +1,5 @@
-type Direction = 'top' | 'bottom' | 'left' | 'right';
-export type Placement = Direction | `${Direction}-start` | `${Direction}-end`;
+import { type Writable } from 'svelte/store';
+import type { Placement } from '@floating-ui/dom';
 export interface Middleware {
     offset?: number | Record<string, any>;
     shift?: Record<string, any>;
@@ -23,4 +23,19 @@ export interface PopupSettings {
     }) => void;
     middleware?: Middleware;
 }
-export {};
+export declare const storePopup: Writable<any>;
+export declare const initPopupStore: () => void;
+export declare const createTooltip: ({ position }: {
+    position?: Placement;
+}) => {
+    popup: (triggerNode: HTMLElement, args: PopupSettings) => {
+        update(newArgs: PopupSettings): void;
+        destroy(): void;
+    };
+    opts: PopupSettings;
+    id: string;
+};
+export declare const popup: (triggerNode: HTMLElement, args: PopupSettings) => {
+    update(newArgs: PopupSettings): void;
+    destroy(): void;
+};

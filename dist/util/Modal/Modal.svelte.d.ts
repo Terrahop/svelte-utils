@@ -1,5 +1,5 @@
 import { fly } from 'svelte/transition';
-import { type Transition, type TransitionParams } from '../../transitions/transitions.js';
+import type { Transition, TransitionParams } from '../../transitions/transitions.js';
 type FlyTransition = typeof fly;
 import type { ModalComponent } from './types.js';
 declare class __sveltets_Render<TransitionIn extends Transition = FlyTransition, TransitionOut extends Transition = FlyTransition> {
@@ -26,7 +26,7 @@ declare class __sveltets_Render<TransitionIn extends Transition = FlyTransition,
         regionHeader?: string | undefined;
         regionBody?: string | undefined;
         regionFooter?: string | undefined;
-        transitions?: boolean | undefined;
+        transitions?: false | undefined;
         transitionIn?: TransitionIn | undefined;
         transitionInParams?: TransitionParams<TransitionIn> | undefined;
         transitionOut?: TransitionOut | undefined;

@@ -11,10 +11,10 @@ export interface ModalSettings {
     title?: string;
     body?: string;
     image?: string;
-    value?: any;
+    value?: unknown;
     valueAttr?: HTMLInputAttributes;
     component?: ModalComponent | string;
-    response?: (r: any) => void;
+    response?: (r?: any) => void;
     backdropClasses?: string;
     modalClasses?: string;
     buttonTextCancel?: string;

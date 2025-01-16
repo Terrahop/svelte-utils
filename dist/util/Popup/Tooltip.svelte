@@ -1,7 +1,7 @@
 <script lang="ts">
+  import { random } from '../../helpers.js'
+  import { popup, type PopupSettings } from '../../index.js'
   import type { Placement } from '@floating-ui/dom'
-  import type { PopupSettings } from './types.js'
-  import { popup } from './popup.js'
   import type { Snippet } from 'svelte'
 
   interface Props {
@@ -13,7 +13,7 @@
 
   const { content, position, class: cls, children }: Props = $props()
 
-  const id = Math.random().toString()
+  const id = random()
   const opts: PopupSettings = {
     event: 'hover',
     target: id,

@@ -1,6 +1,7 @@
 {
 	"name": "@terrahop/svelte-utils",
 	"version": "1.6.0",
+  "license": "MIT",
 	"scripts": {
 		"dev": "vite dev",
 		"build": "vite build && npm run package",

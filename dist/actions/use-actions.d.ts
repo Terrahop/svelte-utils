@@ -9,7 +9,7 @@ export type SvelteSVGActionType<P> = (node: SVGElement, params?: P) => SvelteAct
 export type SVGActionEntry<P = any> = SvelteSVGActionType<P> | [SvelteSVGActionType<P>, P];
 export type SVGActionArray = SVGActionEntry[];
 export type ActionArray = HTMLActionArray | SVGActionArray;
-export declare function useActions(node: HTMLElement | SVGElement, actions: ActionArray): {
-    update(actions: ActionArray): void;
+export declare const useActions: (node: HTMLElement | SVGElement, actions?: ActionArray) => {
+    update(actions?: ActionArray): void;
     destroy(): void;
 };

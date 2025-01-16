@@ -1,13 +1,15 @@
 export const shortcut = (element, params) => {
     let handler;
-    const removeHandler = () => window.removeEventListener('keydown', handler);
+    const removeHandler = () => {
+        globalThis.removeEventListener('keydown', handler);
+    };
     const setHandler = () => {
         removeHandler();
         handler = (e) => {
-            if ((!!params.alt !== e.altKey) ||
-                (!!params.shift !== e.shiftKey) ||
-                (!!params.control !== (e.ctrlKey || e.metaKey)) ||
-                params.key !== e.key) {
+            if ((!!params.alt !== e.altKey)
+                || (!!params.shift !== e.shiftKey)
+                || (!!params.control !== (e.ctrlKey || e.metaKey))
+                || params.key !== e.key) {
                 return;
             }
             e.preventDefault();
@@ -18,7 +20,7 @@ export const shortcut = (element, params) => {
                 element.click();
             }
         };
-        window.addEventListener('keydown', handler);
+        globalThis.addEventListener('keydown', handler);
     };
     setHandler();
     return {

@@ -1,11 +1,12 @@
 import { get, writable } from 'svelte/store';
 import { computePosition, autoUpdate, offset, shift, flip, arrow } from '@floating-ui/dom';
+import { random } from '../helpers.js';
 export const storePopup = writable();
 export const initPopupStore = () => {
     storePopup.set({ computePosition, autoUpdate, offset, shift, flip, arrow });
 };
 export const createTooltip = ({ position }) => {
-    const id = Number.parseInt((Math.random() * 1000).toFixed(0)).toString();
+    const id = random();
     const opts = {
         event: 'hover',
         target: id,
@@ -19,7 +20,7 @@ export const createTooltip = ({ position }) => {
     };
 };
 export const popup = (triggerNode, args) => {
-    args.outsideClose = args.outsideClose === undefined ? true : args.outsideClose;
+    args.outsideClose ??= true;
     const { computePosition, autoUpdate, offset, shift, flip, arrow, size, autoPlacement, hide, inline } = get(storePopup);
     const popupState = {
         open: false,
@@ -119,7 +120,10 @@ export const popup = (triggerNode, args) => {
         }, cssTransitionDuration);
     };
     const toggle = () => {
-        popupState.open ? close() : open();
+        if (popupState.open)
+            close();
+        else
+            open();
     };
     const onWindowClick = (event) => {
         if (!popupState.open)
