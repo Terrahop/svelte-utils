@@ -1,7 +1,8 @@
-<!--@component
+<!--
+@component
 Popup Component. Draws a floating popup when the provided snippet toggle is triggered
 
-@example ```
+```tsx
 <Popup>
   // Either use Toggle which is the child of a div that uses the popup action
   {#snippet Toggle({ isOpen, chevron })}
@@ -20,6 +21,10 @@ Popup Component. Draws a floating popup when the provided snippet toggle is trig
 </Popup>
 ```
 -->
+<script module>
+  import './popup.css'
+</script>
+
 <script lang="ts">
   import type { DefaultPopup, PopupSettings } from '$lib/index.js'
   import { ChevronDown, ChevronUp } from '@steeze-ui/heroicons'
@@ -28,7 +33,9 @@ Popup Component. Draws a floating popup when the provided snippet toggle is trig
   import type { Snippet } from 'svelte'
   import { random } from '$lib/helpers.js'
 
-  interface Props extends Omit<Partial<PopupSettings>, 'target' | 'state'>, DefaultPopup {
+  type PopupProps = Omit<Partial<PopupSettings>, 'target' | 'state'> & DefaultPopup
+
+  interface Props extends PopupProps {
     id?: string
     Toggle?: Snippet<[{ isOpen: boolean, chevron: Snippet }]>
     /**
@@ -40,14 +47,14 @@ Popup Component. Draws a floating popup when the provided snippet toggle is trig
      * ```
      */
     ToggleRoot?: Snippet<[{ settings: PopupSettings, popup: typeof popupAction, isOpen: boolean, chevron: Snippet }]>
-    Popup: Snippet<[isOpen: boolean]>
+    Content: Snippet<[isOpen: boolean]>
   }
 
   let {
     id,
     Toggle,
     ToggleRoot,
-    Popup: popup,
+    Content,
     class: cls = '',
     cPopup = '',
     cContent = 'rounded-box border border-light bg-base-100 p-sm shadow-lg',
@@ -69,6 +76,7 @@ Popup Component. Draws a floating popup when the provided snippet toggle is trig
     outsideClose: true,
     closeQuery: 'button,a[href]',
     state: (event) => (isOpen = event.state),
+    middleware: { offset: 2 },
     ...rest
   }
 </script>
@@ -87,7 +95,7 @@ Popup Component. Draws a floating popup when the provided snippet toggle is trig
 <div data-popup={id} class={classPopup}>
   {#if isOpen}
     <div class={classContent}>
-      {@render popup(isOpen)}
+      {@render Content(isOpen)}
     </div>
   {/if}
 </div>
