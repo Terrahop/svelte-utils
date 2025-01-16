@@ -1,7 +1,6 @@
 <script lang="ts">
+  import { popup, type PopupSettings } from '$lib/index.js'
   import type { Placement } from '@floating-ui/dom'
-  import type { PopupSettings } from './types.js'
-  import { popup } from './popup.js'
   import type { Snippet } from 'svelte'
 
   interface Props {
