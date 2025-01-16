@@ -1,14 +1,18 @@
 <script lang="ts">
+  /* eslint-disable @typescript-eslint/no-non-null-assertion */
   import { SvelteMap } from 'svelte/reactivity'
   import { toasts, type ToastItem } from './toast.svelte.js'
   import type { Snippet } from 'svelte'
 
   interface ToastProps {
-    /** Root css */
+    /** Root css. */
     rootCss?: string
     closeBtnCss?: string
     toastCss?: string
-    /** Toast position. @default 'toast-end toast-bottom' */
+    /**
+     * Toast position.
+     * @default 'toast-end toast-bottom'.
+     */
     typeColors?: {
       info: string
       success: string

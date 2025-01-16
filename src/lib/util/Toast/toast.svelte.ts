@@ -1,4 +1,5 @@
-import { createState } from "../../stores/helpers.svelte"
+import { random } from '$lib/helpers.js'
+import { createState } from '$lib/stores/helpers.svelte.js'
 
 export interface ToastItem {
   id: string
@@ -6,7 +7,10 @@ export interface ToastItem {
   title?: string
   /** Toast message. */
   message?: string
-  /** Toast type. @default 'success' */
+  /**
+   * Toast type.
+   * @default 'success'.
+   */
   type: 'info' | 'success' | 'error' | 'warning' | 'primary'
   /**
    * Duration to display the toast in ms, set to 0 to disable auto closing.
@@ -36,7 +40,7 @@ const trigger = ({
   action,
   actionText
 }: Partial<Omit<ToastItem, 'id'>>) => {
-  const id = Math.random().toString()
+  const id = random()
   duration = type === 'error' ? duration ?? 5000 : duration ?? 4000
 
   toasts.update((v) => [
