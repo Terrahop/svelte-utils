@@ -26,7 +26,7 @@ export interface ModalSettings {
   /** Provide a URL to display an image within the modal. */
   image?: string
   /** By default, used to provide a prompt value. */
-  value?: unknown
+  value?: any
   /** Provide input attributes as key/value pairs. */
   valueAttr?: HTMLInputAttributes
   /** Provide your component reference key or object. */
