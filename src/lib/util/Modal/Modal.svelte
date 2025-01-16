@@ -1,11 +1,8 @@
 <script lang="ts" context="module">
-  /* eslint-disable @typescript-eslint/no-unused-vars */
-  /* eslint-disable no-undef */
-  /* eslint-disable @typescript-eslint/no-explicit-any */
   /* eslint-disable svelte/no-at-html-tags */
 
   import { fly, fade } from 'svelte/transition'
-  import { type Transition, type TransitionParams } from '../../transitions/transitions.js'
+  import type { Transition, TransitionParams } from '../../transitions/transitions.js'
   import { dynamicTransition } from '../../transitions/transitions.js'
 
   type FlyTransition = typeof fly
@@ -18,11 +15,12 @@
   interface ModalEvent {
     backdrop: MouseEvent
   }
+  // eslint-disable-next-line @typescript-eslint/no-deprecated
   const dispatch = createEventDispatcher<ModalEvent>()
 
   // Types
-  import { type SvelteEvent } from '../../types.js'
-  import { prefersReducedMotion } from '../../stores/index.js'
+  import type { SvelteEvent } from '../../types.js'
+  import { prefersReducedMotion } from 'svelte/motion'
   import { focusTrap } from '../../actions/index.js'
 
   import { getModalStore } from './modal.svelte.js'
@@ -84,7 +82,7 @@
   /**
    * Enable/Disable transitions.
    */
-  export let transitions = !$prefersReducedMotion
+  export let transitions = !prefersReducedMotion
   /**
    * Provide the transition used on entry.
    */
@@ -109,7 +107,7 @@
   const cModalImage = 'w-full h-auto'
 
   // Local
-  let promptValue: any
+  let promptValue: unknown
   const buttonTextDefaults: Record<string, string> = {
     buttonTextCancel,
     buttonTextConfirm,
@@ -137,9 +135,9 @@
   // Modal Store Subscription
   $: if ($modalStore.length > 0) handleModals($modalStore)
 
-  const onModalHeightChange = (modal: HTMLDivElement) => {
+  const onModalHeightChange = (modal?: HTMLDivElement) => {
     let modalHeight = modal?.clientHeight
-    if (!modalHeight) modalHeight = (modal?.firstChild as HTMLElement)?.clientHeight
+    modalHeight ??= (modal?.firstChild as HTMLElement | undefined)?.clientHeight
 
     // modal is closed
     if (!modalHeight) return
@@ -162,7 +160,7 @@
     const classList = event.target.classList
     if ((classList.contains('modal-backdrop') || classList.contains('modal-transition')) && registeredInteractionWithBackdrop) {
       // We return `undefined` to differentiate from the cancel button
-      if ($modalStore[0].response) $modalStore[0].response(undefined)
+      if ($modalStore[0].response) $modalStore[0].response()
       modalStore.close()
       /** @event {{ event }} backdrop - Fires on backdrop interaction.  */
       dispatch('backdrop', event)
@@ -184,7 +182,7 @@
     event.preventDefault()
     if ($modalStore[0].response) {
       if ($modalStore[0].valueAttr !== undefined && 'type' in $modalStore[0].valueAttr && $modalStore[0].valueAttr.type === 'number') {
-        $modalStore[0].response(Number.parseInt(promptValue))
+        $modalStore[0].response(Number.parseInt(promptValue as string))
       } else $modalStore[0].response(promptValue)
     }
     modalStore.close()
@@ -201,7 +199,7 @@
   $: cPosition = $modalStore[0]?.position ?? position
   // Reactive
   $: classesBackdrop = `${cBackdrop} ${regionBackdrop} ${zIndex} ${$$props.class ?? ''} ${$modalStore[0]?.backdropClasses ?? ''}`
-  $: classesTransitionLayer = `${cTransitionLayer} ${regionTransition} ${cPosition ?? ''}`
+  $: classesTransitionLayer = `${cTransitionLayer} ${regionTransition} ${cPosition}`
   $: classesModal = `${cModal} ${background} ${width} ${height} ${padding} ${spacing} ${rounded} ${shadow} ${
     $modalStore[0]?.modalClasses ?? ''
   }`
@@ -323,8 +321,8 @@
             aria-label={$modalStore[0].title ?? ''}
           >
             {#if currentComponent?.slot}
-              <svelte:component this={currentComponent?.ref} {...currentComponent?.props} {parent}>
-                {@html currentComponent?.slot}
+              <svelte:component this={currentComponent.ref} {...currentComponent.props} {parent}>
+                {@html currentComponent.slot}
               </svelte:component>
             {:else}
               <svelte:component this={currentComponent?.ref} {...currentComponent?.props} {parent} />

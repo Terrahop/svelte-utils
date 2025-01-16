@@ -26,13 +26,13 @@ export interface ModalSettings {
   /** Provide a URL to display an image within the modal. */
   image?: string
   /** By default, used to provide a prompt value. */
-  value?: any
+  value?: unknown
   /** Provide input attributes as key/value pairs. */
   valueAttr?: HTMLInputAttributes
   /** Provide your component reference key or object. */
   component?: ModalComponent | string
   /** Provide a function. Returns the response value. */
-  response?: (r: any) => void
+  response?: (r?: any) => void
   /** Provide arbitrary classes to the backdrop. */
   backdropClasses?: string
   /** Provide arbitrary classes to the modal window. */
