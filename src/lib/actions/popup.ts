@@ -2,7 +2,6 @@
 import { get, writable, type Writable } from 'svelte/store'
 import type { Placement } from '@floating-ui/dom'
 import { computePosition, autoUpdate, offset, shift, flip, arrow } from '@floating-ui/dom'
-import { random } from '$lib/helpers.js'
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
@@ -30,8 +29,7 @@ export interface Middleware {
 
 export interface PopupSettings {
   /**
-   * Provide the event type.
-   * @default 'click'
+   * Event trigger type.
    */
   event: 'click' | 'hover' | 'focus-blur' | 'focus-click'
   /** Match the popup data value `data-popup="targetNameHere"`. */
@@ -43,7 +41,7 @@ export interface PopupSettings {
   outsideClose?: boolean
   /**
    * Set the placement position.
-   * @default 'bottom-start'.
+   * @default 'bottom'.
    */
   placement?: Placement
   /**
@@ -62,21 +60,6 @@ export const storePopup: Writable<any> = writable()
 
 export const initPopupStore = () => {
   storePopup.set({ computePosition, autoUpdate, offset, shift, flip, arrow })
-}
-
-export const createTooltip = ({ position }: { position?: Placement }) => {
-  const id = random()
-  const opts: PopupSettings = {
-    event: 'hover',
-    target: id,
-    placement: position ?? 'bottom',
-    closeQuery: 'a, li, button'
-  }
-  return {
-    popup,
-    opts,
-    id
-  }
 }
 
 export const popup = (triggerNode: HTMLElement, args: PopupSettings) => {
@@ -129,7 +112,7 @@ export const popup = (triggerNode: HTMLElement, args: PopupSettings) => {
       // https://floating-ui.com/docs/middleware#ordering
       middleware: [
         // https://floating-ui.com/docs/offset
-        offset(args.middleware?.offset ?? 8),
+        offset(args.middleware?.offset ?? 4),
         // https://floating-ui.com/docs/shift
         shift(args.middleware?.shift ?? { padding: 8 }),
         // https://floating-ui.com/docs/flip
