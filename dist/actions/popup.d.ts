@@ -22,8 +22,7 @@ export interface Middleware {
 }
 export interface PopupSettings {
     /**
-     * Provide the event type.
-     * @default 'click'
+     * Event trigger type.
      */
     event: 'click' | 'hover' | 'focus-blur' | 'focus-click';
     /** Match the popup data value `data-popup="targetNameHere"`. */
@@ -35,7 +34,7 @@ export interface PopupSettings {
     outsideClose?: boolean;
     /**
      * Set the placement position.
-     * @default 'bottom-start'.
+     * @default 'bottom'.
      */
     placement?: Placement;
     /**
@@ -52,16 +51,6 @@ export interface PopupSettings {
 }
 export declare const storePopup: Writable<any>;
 export declare const initPopupStore: () => void;
-export declare const createTooltip: ({ position }: {
-    position?: Placement;
-}) => {
-    popup: (triggerNode: HTMLElement, args: PopupSettings) => {
-        update(newArgs: PopupSettings): void;
-        destroy(): void;
-    };
-    opts: PopupSettings;
-    id: string;
-};
 export declare const popup: (triggerNode: HTMLElement, args: PopupSettings) => {
     update(newArgs: PopupSettings): void;
     destroy(): void;

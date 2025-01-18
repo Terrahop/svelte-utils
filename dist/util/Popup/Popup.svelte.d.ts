@@ -1,5 +1,6 @@
 import './popup.css';
-import type { DefaultPopup, PopupSettings } from '../../index.js';
+import type { PopupSettings } from '../../index.js';
+import { type DefaultPopup } from '../../defaults.js';
 import { popup as popupAction } from '../../actions/popup.js';
 import type { Snippet } from 'svelte';
 /**
@@ -24,26 +25,28 @@ import type { Snippet } from 'svelte';
  * </Popup>
  * ```
  */
-declare const Popup: import("svelte").Component<Omit<Partial<PopupSettings>, "target" | "state"> & DefaultPopup & {
-    id?: string;
-    Toggle?: Snippet<[{
+declare const Popup: import("svelte").Component<Omit<Partial<PopupSettings>, "state" | "target"> & DefaultPopup & {
+    content?: Snippet;
+    contentRoot?: Snippet<[id: string]>;
+    /**
+     * Should the popup container be set to hidden when closed.
+     * @default false
+     */
+    closeHidden?: boolean;
+    trigger?: Snippet<[{
         isOpen: boolean;
         chevron: Snippet;
     }]>;
     /**
      * Root toggle snippet, use the to create the toggle popup element directly, it gets provided the
-     * settings as a prop to the snippet. The element must be in the document on page render and you must use
-     * the popup action provided in the snippet props on the element.
-     * @example ```svelte
-     *
-     * ```
+     * settings as an arg to the snippet. The element must be in the document on page render and you must use
+     * the popup action provided in the snippet args on the element.
      */
-    ToggleRoot?: Snippet<[{
+    triggerRoot?: Snippet<[{
         settings: PopupSettings;
         popup: typeof popupAction;
         isOpen: boolean;
         chevron: Snippet;
     }]>;
-    Content: Snippet<[isOpen: boolean]>;
 }, {}, "">;
 export default Popup;

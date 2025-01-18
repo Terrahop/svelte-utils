@@ -26,7 +26,7 @@ declare class __sveltets_Render<TransitionIn extends Transition = FlyTransition,
         regionHeader?: string | undefined;
         regionBody?: string | undefined;
         regionFooter?: string | undefined;
-        transitions?: false | undefined;
+        transitions?: boolean | undefined;
         transitionIn?: TransitionIn | undefined;
         transitionInParams?: TransitionParams<TransitionIn> | undefined;
         transitionOut?: TransitionOut | undefined;

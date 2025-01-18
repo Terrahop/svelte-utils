@@ -1,25 +1,10 @@
 /* eslint-disable */
 import { get, writable } from 'svelte/store';
 import { computePosition, autoUpdate, offset, shift, flip, arrow } from '@floating-ui/dom';
-import { random } from '../helpers.js';
 // Use a store to pass the Floating UI import references
 export const storePopup = writable();
 export const initPopupStore = () => {
     storePopup.set({ computePosition, autoUpdate, offset, shift, flip, arrow });
-};
-export const createTooltip = ({ position }) => {
-    const id = random();
-    const opts = {
-        event: 'hover',
-        target: id,
-        placement: position ?? 'bottom',
-        closeQuery: 'a, li, button'
-    };
-    return {
-        popup,
-        opts,
-        id
-    };
 };
 export const popup = (triggerNode, args) => {
     args.outsideClose ??= true;
@@ -77,7 +62,7 @@ export const popup = (triggerNode, args) => {
             // https://floating-ui.com/docs/middleware#ordering
             middleware: [
                 // https://floating-ui.com/docs/offset
-                offset(args.middleware?.offset ?? 8),
+                offset(args.middleware?.offset ?? 4),
                 // https://floating-ui.com/docs/shift
                 shift(args.middleware?.shift ?? { padding: 8 }),
                 // https://floating-ui.com/docs/flip

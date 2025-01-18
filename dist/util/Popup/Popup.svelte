@@ -26,44 +26,52 @@ Popup Component. Draws a floating popup when the provided snippet toggle is trig
 </script>
 
 <script lang="ts">
-  import type { DefaultPopup, PopupSettings } from '../../index.js'
+  import type { PopupSettings } from '../../index.js'
+  import { getDefaults, type DefaultPopup } from '../../defaults.js'
   import { ChevronDown, ChevronUp } from '@steeze-ui/heroicons'
   import { Icon } from '@steeze-ui/svelte-icon'
   import { popup as popupAction } from '../../actions/popup.js'
   import type { Snippet } from 'svelte'
   import { random } from '../../helpers.js'
+  import { fade } from 'svelte/transition'
 
-  type PopupProps = Omit<Partial<PopupSettings>, 'target' | 'state'> & DefaultPopup
-
-  interface Props extends PopupProps {
-    id?: string
-    Toggle?: Snippet<[{ isOpen: boolean, chevron: Snippet }]>
+  interface Props extends Omit<Partial<PopupSettings>, 'target' | 'state'>, DefaultPopup {
+    content?: Snippet
+    contentRoot?: Snippet<[id: string]>
+    /**
+     * Should the popup container be set to hidden when closed.
+     * @default false
+     */
+    closeHidden?: boolean
+    trigger?: Snippet<[{ isOpen: boolean, chevron: Snippet }]>
     /**
      * Root toggle snippet, use the to create the toggle popup element directly, it gets provided the
-     * settings as a prop to the snippet. The element must be in the document on page render and you must use
-     * the popup action provided in the snippet props on the element.
-     * @example ```svelte
-     *
-     * ```
+     * settings as an arg to the snippet. The element must be in the document on page render and you must use
+     * the popup action provided in the snippet args on the element.
      */
-    ToggleRoot?: Snippet<[{ settings: PopupSettings, popup: typeof popupAction, isOpen: boolean, chevron: Snippet }]>
-    Content: Snippet<[isOpen: boolean]>
+    triggerRoot?: Snippet<[{ settings: PopupSettings, popup: typeof popupAction, isOpen: boolean, chevron: Snippet }]>
   }
 
+  const defaults = getDefaults().popup
+
   let {
-    id,
-    Toggle,
-    ToggleRoot,
-    Content,
-    class: cls = '',
+    trigger,
+    triggerRoot,
+    content,
+    contentRoot,
+    class: cls = defaults?.class,
+    cContent = defaults?.cContent ?? 'rounded-box border border-base-content/5 bg-base-100 p-2 shadow-lg',
+    content: tooltipContent,
+    cZ = defaults?.cZ ?? 'z-10',
     cPopup = '',
-    cContent = 'rounded-box border border-light bg-base-100 p-sm shadow-lg',
     closeHidden = false,
-    cZ = 'z-20',
     ...rest
   }: Props = $props()
 
-  id ??= random()
+  const id = random()
+
+  cls = `${cls} ${defaults?.classMerge ?? ''}`
+  cContent = defaults?.cContentMerge ? `${cContent} ${defaults.cContentMerge}` : cContent
 
   let isOpen = $state(false)
   const classPopup = $derived(`${cZ} ${cPopup} ${isOpen ? '' : (closeHidden ? '!hidden' : '')}`)
@@ -72,11 +80,7 @@ Popup Component. Draws a floating popup when the provided snippet toggle is trig
   const popupSettings: PopupSettings = {
     event: 'click',
     target: id,
-    placement: 'bottom-start',
-    outsideClose: true,
-    closeQuery: 'button,a[href]',
     state: (event) => (isOpen = event.state),
-    middleware: { offset: 2 },
     ...rest
   }
 </script>
@@ -85,17 +89,22 @@ Popup Component. Draws a floating popup when the provided snippet toggle is trig
   <Icon src={isOpen ? ChevronUp : ChevronDown} size="20" class="text-alt" />
 {/snippet}
 
-{#if ToggleRoot}
-  {@render ToggleRoot({ settings: popupSettings, popup: popupAction, isOpen, chevron })}
-{:else if Toggle}
+{#if triggerRoot}
+  {@render triggerRoot({ settings: popupSettings, popup: popupAction, isOpen, chevron })}
+{:else if trigger}
   <div use:popupAction={popupSettings} class="{cls} flex justify-between">
-    {@render Toggle({ isOpen, chevron })}
+    {@render trigger({ isOpen, chevron })}
   </div>
 {/if}
-<div data-popup={id} class={classPopup}>
-  {#if isOpen}
-    <div class={classContent}>
-      {@render Content(isOpen)}
-    </div>
-  {/if}
-</div>
+
+{#if contentRoot}
+  {@render contentRoot(id)}
+{:else if content}
+  <div data-popup={id} class={classPopup}>
+    {#if isOpen}
+      <div class={classContent} transition:fade={{ duration: 100 }}>
+        {@render content()}
+      </div>
+    {/if}
+  </div>
+{/if}
