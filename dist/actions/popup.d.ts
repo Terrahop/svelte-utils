@@ -50,7 +50,7 @@ export interface PopupSettings {
     middleware?: Middleware;
     /**
      * Close the popup on mouse down even instead of mouse click
-     * @default 'a[href], button'
+     * @default false
      */
     closeOnMouseDown?: boolean;
 }
