@@ -53,6 +53,12 @@ export interface PopupSettings {
   state?: (event: { state: boolean }) => void
   /** Provide Floating UI middleware settings. */
   middleware?: Middleware
+
+  /**
+   * Close the popup on mouse down even instead of mouse click
+   * @default false
+   */
+  closeOnMouseDown?: boolean
 }
 
 // Use a store to pass the Floating UI import references
@@ -249,6 +255,7 @@ export const popup = (triggerNode: HTMLElement, args: PopupSettings) => {
     case 'click':
       triggerNode.addEventListener('click', toggle, true)
       window.addEventListener('click', onWindowClick, true)
+      args.closeOnMouseDown &&  window.addEventListener('mousedown', onWindowClick, true)
       break
     case 'hover':
       triggerNode.addEventListener('mouseover', open, true)
@@ -289,6 +296,7 @@ export const popup = (triggerNode: HTMLElement, args: PopupSettings) => {
       triggerNode.removeEventListener('blur', () => close(), true)
       // Window Events
       window.removeEventListener('click', onWindowClick, true)
+      args.closeOnMouseDown && window.removeEventListener('mousedown', onWindowClick, true)
       window.removeEventListener('keydown', onWindowKeyDown, true)
     }
   }
