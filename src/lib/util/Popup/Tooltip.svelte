@@ -41,9 +41,3 @@
 {:else}
   {@render children()}
 {/if}
-<!-- <div class="{cls} size-full" use:popup={opts}> -->
-<!--   {@render children()} -->
-<!-- </div> -->
-<!-- <div class="z-20 w-fit rounded-box border border-base-content/5 bg-base-100 px-4 py-2 drop-shadow-md" data-popup={id}> -->
-<!--   <p class="w-fit whitespace-nowrap">{content}</p> -->
-<!-- </div> -->
