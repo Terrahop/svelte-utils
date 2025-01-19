@@ -48,6 +48,11 @@ export interface PopupSettings {
     }) => void;
     /** Provide Floating UI middleware settings. */
     middleware?: Middleware;
+    /**
+     * Close the popup on mouse down even instead of mouse click
+     * @default 'a[href], button'
+     */
+    closeOnMouseDown?: boolean;
 }
 export declare const storePopup: Writable<any>;
 export declare const initPopupStore: () => void;

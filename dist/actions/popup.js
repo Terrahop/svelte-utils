@@ -204,6 +204,7 @@ export const popup = (triggerNode, args) => {
         case 'click':
             triggerNode.addEventListener('click', toggle, true);
             window.addEventListener('click', onWindowClick, true);
+            args.closeOnMouseDown && window.addEventListener('mousedown', onWindowClick, true);
             break;
         case 'hover':
             triggerNode.addEventListener('mouseover', open, true);
@@ -242,6 +243,7 @@ export const popup = (triggerNode, args) => {
             triggerNode.removeEventListener('blur', () => close(), true);
             // Window Events
             window.removeEventListener('click', onWindowClick, true);
+            args.closeOnMouseDown && window.removeEventListener('mousedown', onWindowClick, true);
             window.removeEventListener('keydown', onWindowKeyDown, true);
         }
     };
