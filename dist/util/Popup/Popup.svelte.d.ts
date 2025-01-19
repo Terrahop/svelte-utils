@@ -9,17 +9,17 @@ import type { Snippet } from 'svelte';
  * ```tsx
  * <Popup>
  * // Either use Toggle which is the child of a div that uses the popup action
- * {#snippet Toggle({ isOpen, chevron })}
+ * {#snippet trigger({ isOpen, chevron })}
  *   <button>toggle</button>
  * {/snippet}
  *
  * // Or use ToggleRoot and pass along popup and options
- * {#snippet ToggleRoot({ settings, popup, isOpen, chevron })}
+ * {#snippet triggerRoot({ settings, popup, isOpen, chevron })}
  *   <button use:popup={settings}>toggle</button>
  * {/snippet}
  *
  * // The popup content
- * {#snippet Popup(isOpen)}
+ * {#snippet Content(isOpen)}
  *   Popup Content
  * {/snippet}
  * </Popup>

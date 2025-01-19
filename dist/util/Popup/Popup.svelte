@@ -5,17 +5,17 @@ Popup Component. Draws a floating popup when the provided snippet toggle is trig
 ```tsx
 <Popup>
   // Either use Toggle which is the child of a div that uses the popup action
-  {#snippet Toggle({ isOpen, chevron })}
+  {#snippet trigger({ isOpen, chevron })}
     <button>toggle</button>
   {/snippet}
 
   // Or use ToggleRoot and pass along popup and options
-  {#snippet ToggleRoot({ settings, popup, isOpen, chevron })}
+  {#snippet triggerRoot({ settings, popup, isOpen, chevron })}
     <button use:popup={settings}>toggle</button>
   {/snippet}
 
   // The popup content
-  {#snippet Popup(isOpen)}
+  {#snippet Content(isOpen)}
     Popup Content
   {/snippet}
 </Popup>
@@ -92,7 +92,7 @@ Popup Component. Draws a floating popup when the provided snippet toggle is trig
 {#if triggerRoot}
   {@render triggerRoot({ settings: popupSettings, popup: popupAction, isOpen, chevron })}
 {:else if trigger}
-  <div use:popupAction={popupSettings} class="{cls} flex justify-between">
+  <div use:popupAction={popupSettings} class={cls}>
     {@render trigger({ isOpen, chevron })}
   </div>
 {/if}
