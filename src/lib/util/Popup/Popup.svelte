@@ -86,7 +86,7 @@ Popup Component. Draws a floating popup when the provided snippet toggle is trig
 </script>
 
 {#snippet chevron()}
-  <Icon src={isOpen ? ChevronUp : ChevronDown} size="20" class="text-alt" />
+  <Icon src={isOpen ? ChevronUp : ChevronDown} size="20" />
 {/snippet}
 
 {#if triggerRoot}
