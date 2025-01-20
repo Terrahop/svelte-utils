@@ -31,10 +31,7 @@ importers:
         version: 4.0.0(svelte@5.18.0)(vite@5.4.11)
       '@terrahop/eslint-config-svelte':
         specifier: github:Terrahop/eslint-config-svelte#v1.2.0
-        version: https://codeload.github.com/Terrahop/eslint-config-svelte/tar.gz/f7fdcf302653c34f95ed288a0fd10cce0947593a(@typescript-eslint/parser@8.20.0(eslint@9.18.0(jiti@1.21.6))(typescript@5.7.3))(jiti@1.21.6)(typescript@5.7.3)
-      '@types/lodash.merge':
-        specifier: ^4.6.9
-        version: 4.6.9
+        version: git+https://git@github.com:Terrahop/eslint-config-svelte.git#f7fdcf302653c34f95ed288a0fd10cce0947593a(@typescript-eslint/parser@8.20.0(eslint@9.18.0(jiti@1.21.6))(typescript@5.7.3))(jiti@1.21.6)(typescript@5.7.3)
       autoprefixer:
         specifier: ^10.4.20
         version: 10.4.20(postcss@8.5.1)
@@ -50,9 +47,6 @@ importers:
       eslint-plugin-svelte:
         specifier: ^2.46.1
         version: 2.46.1(eslint@9.18.0(jiti@1.21.6))(svelte@5.18.0)
-      lodash.merge:
-        specifier: ^4.6.2
-        version: 4.6.2
       postcss:
         specifier: ^8.5.1
         version: 8.5.1
@@ -1066,8 +1060,8 @@ packages:
       svelte: ^5.0.0-next.96 || ^5.0.0
       vite: ^5.0.0
 
-  '@terrahop/eslint-config-svelte@https://codeload.github.com/Terrahop/eslint-config-svelte/tar.gz/f7fdcf302653c34f95ed288a0fd10cce0947593a':
-    resolution: {tarball: https://codeload.github.com/Terrahop/eslint-config-svelte/tar.gz/f7fdcf302653c34f95ed288a0fd10cce0947593a}
+  '@terrahop/eslint-config-svelte@git+https://git@github.com:Terrahop/eslint-config-svelte.git#f7fdcf302653c34f95ed288a0fd10cce0947593a':
+    resolution: {commit: f7fdcf302653c34f95ed288a0fd10cce0947593a, repo: git@github.com:Terrahop/eslint-config-svelte.git, type: git}
     version: 1.2.0
 
   '@types/cookie@0.6.0':
@@ -1081,12 +1075,6 @@ packages:
 
   '@types/json5@0.0.29':
     resolution: {integrity: sha512-dRLjCWHYg4oaA77cxO64oO+7JwCwnIzkZPdrrC71jQmQtlhM556pwKo5bUzqvZndkVbeFLIIi+9TC40JNF5hNQ==}
-
-  '@types/lodash.merge@4.6.9':
-    resolution: {integrity: sha512-23sHDPmzd59kUgWyKGiOMO2Qb9YtqRO/x4IhkgNUiPQ1+5MUVqi6bCZeq9nBJ17msjIMbEIO5u+XW4Kz6aGUhQ==}
-
-  '@types/lodash@4.17.14':
-    resolution: {integrity: sha512-jsxagdikDiDBeIRaPYtArcT8my4tN1og7MtMRquFT3XNA6axxyHDRUemqDz/taRDdOUn0GnGHRCuff4q48sW9A==}
 
   '@types/normalize-package-data@2.4.4':
     resolution: {integrity: sha512-37i+OaWTh9qeK4LSHPsyRC7NahnGotNuZvjLSgcPzblpHB3rrCJxAOgI5gCdKm7coonsaX1Of0ILiTcnZjbfxA==}
@@ -4035,7 +4023,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@terrahop/eslint-config-svelte@https://codeload.github.com/Terrahop/eslint-config-svelte/tar.gz/f7fdcf302653c34f95ed288a0fd10cce0947593a(@typescript-eslint/parser@8.20.0(eslint@9.18.0(jiti@1.21.6))(typescript@5.7.3))(jiti@1.21.6)(typescript@5.7.3)':
+  '@terrahop/eslint-config-svelte@git+https://git@github.com:Terrahop/eslint-config-svelte.git#f7fdcf302653c34f95ed288a0fd10cce0947593a(@typescript-eslint/parser@8.20.0(eslint@9.18.0(jiti@1.21.6))(typescript@5.7.3))(jiti@1.21.6)(typescript@5.7.3)':
     dependencies:
       '@stylistic/eslint-plugin': 2.12.1(eslint@9.18.0(jiti@1.21.6))(typescript@5.7.3)
       eslint: 9.18.0(jiti@1.21.6)
@@ -4065,12 +4053,6 @@ snapshots:
   '@types/json-schema@7.0.15': {}
 
   '@types/json5@0.0.29': {}
-
-  '@types/lodash.merge@4.6.9':
-    dependencies:
-      '@types/lodash': 4.17.14
-
-  '@types/lodash@4.17.14': {}
 
   '@types/normalize-package-data@2.4.4': {}
 
