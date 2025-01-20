@@ -59,7 +59,7 @@ Popup Component. Draws a floating popup when the provided snippet toggle is trig
     triggerRoot,
     content,
     contentRoot,
-    class: cls = defaults?.class,
+    class: cls = defaults?.class ?? '',
     cContent = defaults?.cContent ?? 'rounded-box border border-base-content/5 bg-base-100 p-2 shadow-lg',
     content: tooltipContent,
     cZ = defaults?.cZ ?? 'z-10',
@@ -70,8 +70,8 @@ Popup Component. Draws a floating popup when the provided snippet toggle is trig
 
   const id = random()
 
-  cls = `${cls} ${defaults?.classMerge ?? ''}`
-  cContent = defaults?.cContentMerge ? `${cContent} ${defaults.cContentMerge}` : cContent
+  if (defaults?.classMerge) cls += ` ${defaults.classMerge}`
+  if (defaults?.cContentMerge) cContent += ` ${defaults.cContentMerge}`
 
   let isOpen = $state(false)
   const classPopup = $derived(`${cZ} ${cPopup} ${isOpen ? '' : (closeHidden ? '!hidden' : '')}`)

@@ -16,7 +16,7 @@
 
   let {
     children,
-    class: cls = defaults?.class,
+    class: cls = defaults?.class ?? '',
     cContent = defaults?.cContent ?? 'rounded-box border border-base-content/5 bg-base-100 px-4 py-2 shadow-md',
     content: tooltipContent,
     cZ = defaults?.cZ,
@@ -24,8 +24,8 @@
     placement
   }: Props = $props()
 
-  cls = `${cls} ${defaults?.classMerge ?? ''}`
-  cContent = defaults?.cContentMerge ? `${cContent} ${defaults.cContentMerge}` : cContent
+  if (defaults?.classMerge) cls += ` ${defaults.classMerge}`
+  if (defaults?.cContentMerge) cContent += ` ${defaults.cContentMerge}`
 </script>
 
 {#if tooltipContent}
