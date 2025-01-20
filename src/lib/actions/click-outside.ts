@@ -16,10 +16,17 @@ interface Args {
  * <div use:clickOutside={cb: () => console.log('Clicked outside!')} />
  * ```
  */
-export const clickOutside: Action<HTMLElement, Args | ((event: MouseEvent) => void)> = (element: HTMLElement, args) => {
-  const cb = typeof args === 'object' ? args.cb : args
-  const mousedown = typeof args === 'object' ? args.mousedown : undefined
-  // const { cb, mousedown } = args
+export const clickOutside: Action<HTMLElement, Args | ((event: MouseEvent) => void)> = (element, args) => {
+  let cb: Args['cb']
+  let mousedown: Args['mousedown']
+
+  const setArgs = () => {
+    cb = typeof args === 'object' ? args.cb : args
+    mousedown = typeof args === 'object' ? args.mousedown : undefined
+  }
+
+  setArgs()
+
   /**
    * Callback onclick function.
    * @param event - Mouse click event.
@@ -38,6 +45,7 @@ export const clickOutside: Action<HTMLElement, Args | ((event: MouseEvent) => vo
   return {
     update(newCallbackFunction) {
       args = newCallbackFunction
+      setArgs()
     },
     destroy() {
       document.body.removeEventListener(mousedown ? 'mousedown' : 'click', onClick, true)
