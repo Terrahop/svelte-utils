@@ -8,9 +8,13 @@
  * ```
  */
 export const clickOutside = (element, args) => {
-    const cb = typeof args === 'object' ? args.cb : args;
-    const mousedown = typeof args === 'object' ? args.mousedown : undefined;
-    // const { cb, mousedown } = args
+    let cb;
+    let mousedown;
+    const setArgs = () => {
+        cb = typeof args === 'object' ? args.cb : args;
+        mousedown = typeof args === 'object' ? args.mousedown : undefined;
+    };
+    setArgs();
     /**
      * Callback onclick function.
      * @param event - Mouse click event.
@@ -27,6 +31,7 @@ export const clickOutside = (element, args) => {
     return {
         update(newCallbackFunction) {
             args = newCallbackFunction;
+            setArgs();
         },
         destroy() {
             document.body.removeEventListener(mousedown ? 'mousedown' : 'click', onClick, true);
