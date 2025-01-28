@@ -14,27 +14,31 @@ export const clickOutside = (element, args) => {
         cb = typeof args === 'object' ? args.cb : args;
         mousedown = typeof args === 'object' ? args.mousedown : undefined;
     };
-    setArgs();
-    /**
-     * Callback onclick function.
-     * @param event - Mouse click event.
-     */
-    const onClick = (event) => {
+    const clickHandler = (event) => {
         if (!element.contains(event.target) && !event.defaultPrevented) {
             cb(event);
         }
     };
-    // Use a delay to prevent the click setting states too quickly.
-    setTimeout(() => {
-        document.body.addEventListener(mousedown ? 'mousedown' : 'click', onClick, true);
-    }, 50);
+    const removeHandler = () => {
+        document.body.removeEventListener(mousedown ? 'mousedown' : 'click', clickHandler, true);
+    };
+    const setHandler = () => {
+        removeHandler();
+        // Use a delay to prevent the click setting states too quickly.
+        setTimeout(() => {
+            document.body.addEventListener(mousedown ? 'mousedown' : 'click', clickHandler, true);
+        }, 50);
+    };
+    setArgs();
+    setHandler();
     return {
         update(newCallbackFunction) {
             args = newCallbackFunction;
             setArgs();
+            setHandler();
         },
         destroy() {
-            document.body.removeEventListener(mousedown ? 'mousedown' : 'click', onClick, true);
+            removeHandler();
         }
     };
 };
