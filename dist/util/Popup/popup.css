@@ -1,7 +1,9 @@
 [data-popup] {
 	/* https://floating-ui.com/docs/computeposition#usage */
-	@apply absolute top-0 left-0;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  display: none
 	/* Set hidden on page load */
-	@apply hidden;
 	/* @apply transition-opacity duration-150; */
 }

@@ -94,7 +94,7 @@
     {#if toast}
       {@render toast({ ...toastL, countdown: countdowns.get(toastL.id) })}
     {:else}
-      <div class="{toastCss} relative flex w-fit max-w-sm self-end whitespace-normal border py-2 pr-2 drop-shadow">
+      <div class="{toastCss} relative flex w-fit max-w-sm self-end whitespace-normal border py-2 pr-2 drop-shadow-sm">
         <div class="absolute left-0 top-0 h-full w-1.5 min-w-1.5 {typeColors[toastL.type]} rounded-l-box"></div>
         <div class="flex flex-col py-2 pl-5 pr-4">
           {#if toastL.title}

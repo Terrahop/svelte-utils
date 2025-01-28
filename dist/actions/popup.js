@@ -80,7 +80,6 @@ export const popup = (triggerNode, args) => {
             // Handle Arrow Placement:
             // https://floating-ui.com/docs/arrow
             if (elemArrow) {
-                console.log('arrow?');
                 const { x: arrowX, y: arrowY } = middlewareData.arrow;
                 // @ts-expect-error implicit any
                 const staticSide = {
@@ -208,7 +207,6 @@ export const popup = (triggerNode, args) => {
             args.closeOnMouseDown && window.addEventListener('mousedown', onWindowClick, true);
             break;
         case 'hover':
-            // triggerNode.addEventListener('click', () => close(), true)
             triggerNode.addEventListener('mouseover', open, true);
             triggerNode.addEventListener('mouseleave', () => close(), true);
             break;
@@ -232,11 +230,6 @@ export const popup = (triggerNode, args) => {
             args = newArgs;
             render();
             setDomElements();
-            // close(() => {
-            //   args = newArgs
-            //   render()
-            //   setDomElements()
-            // })
         },
         destroy() {
             // Trigger Events

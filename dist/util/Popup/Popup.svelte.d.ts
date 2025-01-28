@@ -3,29 +3,7 @@ import type { PopupSettings } from '../../index.js';
 import { type DefaultPopup } from '../../defaults.js';
 import { popup as popupAction } from '../../actions/popup.js';
 import type { Snippet } from 'svelte';
-/**
- * Popup Component. Draws a floating popup when the provided snippet toggle is triggered
- *
- * ```tsx
- * <Popup>
- * // Either use Toggle which is the child of a div that uses the popup action
- * {#snippet trigger({ isOpen, chevron })}
- *   <button>toggle</button>
- * {/snippet}
- *
- * // Or use ToggleRoot and pass along popup and options
- * {#snippet triggerRoot({ settings, popup, isOpen, chevron })}
- *   <button use:popup={settings}>toggle</button>
- * {/snippet}
- *
- * // The popup content
- * {#snippet Content(isOpen)}
- *   Popup Content
- * {/snippet}
- * </Popup>
- * ```
- */
-declare const Popup: import("svelte").Component<Omit<Partial<PopupSettings>, "state" | "target"> & DefaultPopup & {
+interface Props extends Omit<Partial<PopupSettings>, 'target' | 'state'>, DefaultPopup {
     content?: Snippet;
     contentRoot?: Snippet<[id: string]>;
     /**
@@ -48,5 +26,29 @@ declare const Popup: import("svelte").Component<Omit<Partial<PopupSettings>, "st
         isOpen: boolean;
         chevron: Snippet;
     }]>;
-}, {}, "">;
+}
+/**
+ * Popup Component. Draws a floating popup when the provided snippet toggle is triggered
+ *
+ * ```tsx
+ * <Popup>
+ * // Either use Toggle which is the child of a div that uses the popup action
+ * {#snippet trigger({ isOpen, chevron })}
+ *   <button>toggle</button>
+ * {/snippet}
+ *
+ * // Or use ToggleRoot and pass along popup and options
+ * {#snippet triggerRoot({ settings, popup, isOpen, chevron })}
+ *   <button use:popup={settings}>toggle</button>
+ * {/snippet}
+ *
+ * // The popup content
+ * {#snippet Content(isOpen)}
+ *   Popup Content
+ * {/snippet}
+ * </Popup>
+ * ```
+ */
+declare const Popup: import("svelte").Component<Props, {}, "">;
+type Popup = ReturnType<typeof Popup>;
 export default Popup;

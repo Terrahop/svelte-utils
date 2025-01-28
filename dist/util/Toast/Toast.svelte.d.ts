@@ -1,6 +1,6 @@
 import { type ToastItem } from './toast.svelte.js';
 import type { Snippet } from 'svelte';
-declare const Toast: import("svelte").Component<{
+interface ToastProps {
     /** Root css. */
     rootCss?: string;
     closeBtnCss?: string;
@@ -20,5 +20,7 @@ declare const Toast: import("svelte").Component<{
     toast?: Snippet<[t: ToastItem & {
         countdown?: number;
     }]>;
-}, {}, "">;
+}
+declare const Toast: import("svelte").Component<ToastProps, {}, "">;
+type Toast = ReturnType<typeof Toast>;
 export default Toast;

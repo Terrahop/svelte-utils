@@ -50,7 +50,7 @@
   /** Provide classes to style modal box shadow. */
   export let shadow = 'shadow-xl'
   /** Provide a class to override the z-index. */
-  export let zIndex = 'z-[999]'
+  export let zIndex = 'z-999'
 
   // Props (buttons)
   /** Provide classes for neutral buttons, such as Cancel. */
@@ -334,25 +334,6 @@
   {/key}
 {/if}
 
-<style>
-  .w-modal-slim {
-    width: 100%;
-    max-width: 400px;
-}
-
-  .w-modal {
-    width: 100%;
-    max-width: 640px;
-}
-
-  .w-modal-wide {
-    width: 100%;
-    max-width: 80%;
-}
-
-  /* Provides initial focus selection styles on opening the modal */
-  .modal *:focus:not([tabindex='-1']):not(.input):not(.textarea):not(.select):not(.input-group):not(.input-group input) {
-    outline-style: auto;
-    outline-color: -webkit-focus-ring-color;
-  }
+<style>/*! tailwindcss v4.0.0 | MIT License | https://tailwindcss.com */
+.w-modal-slim{width:100%;max-width:400px}.w-modal{width:100%;max-width:640px}.w-modal-wide{width:100%;max-width:80%}.modal :focus:not([tabindex="-1"]):not(.input):not(.textarea):not(.select):not(.input-group):not(.input-group input){outline-style:auto;outline-color:-webkit-focus-ring-color}
 </style>
