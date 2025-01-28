@@ -1,3 +1,5 @@
+import type { Action } from 'svelte/action'
+
 interface ShortcutParams {
   alt?: boolean
   shift?: boolean
@@ -20,7 +22,7 @@ interface ShortcutParams {
  * }}></div>
  * ```
  */
-export const shortcut = (element: HTMLElement, params: ShortcutParams) => {
+export const shortcut: Action<HTMLElement, ShortcutParams> = (element: HTMLElement, params: ShortcutParams) => {
   let handler: (e: KeyboardEvent) => void
   const removeHandler = () => {
     globalThis.removeEventListener('keydown', handler)
