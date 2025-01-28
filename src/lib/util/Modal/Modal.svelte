@@ -50,7 +50,7 @@
   /** Provide classes to style modal box shadow. */
   export let shadow = 'shadow-xl'
   /** Provide a class to override the z-index. */
-  export let zIndex = 'z-[999]'
+  export let zIndex = 'z-999'
 
   // Props (buttons)
   /** Provide classes for neutral buttons, such as Cancel. */

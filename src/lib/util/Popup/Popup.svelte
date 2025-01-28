@@ -74,7 +74,7 @@ Popup Component. Draws a floating popup when the provided snippet toggle is trig
   if (defaults?.cContentMerge) cContent += ` ${defaults.cContentMerge}`
 
   let isOpen = $state(false)
-  const classPopup = $derived(`${cZ} ${cPopup} ${isOpen ? '' : (closeHidden ? '!hidden' : '')}`)
+  const classPopup = $derived(`${cZ} ${cPopup} ${isOpen ? '' : (closeHidden ? 'hidden!' : '')}`)
   const classContent = $derived(cContent)
 
   const popupSettings: PopupSettings = {
