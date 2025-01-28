@@ -60,7 +60,7 @@ Popup Component. Draws a floating popup when the provided snippet toggle is trig
     content,
     contentRoot,
     class: cls = defaults?.class ?? '',
-    cContent = defaults?.cContent ?? 'rounded-box border border-base-content/5 bg-base-100 p-2 shadow-lg',
+    cContent = defaults?.cContent ?? 'rounded-box border border-base-content/5 bg-base-100 p-2',
     content: tooltipContent,
     cZ = defaults?.cZ ?? 'z-10',
     cPopup = '',
@@ -102,7 +102,7 @@ Popup Component. Draws a floating popup when the provided snippet toggle is trig
 {:else if content}
   <div data-popup={id} class={classPopup}>
     {#if isOpen}
-      <div class={classContent} transition:fade={{ duration: 100 }}>
+      <div class={classContent} transition:fade={{ duration: 150 }}>
         {@render content()}
       </div>
     {/if}

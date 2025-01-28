@@ -14,7 +14,7 @@ export interface Defaults {
         /** @default 'rounded-box border border-light bg-base-100 px-4 py-2 drop-shadow-md' */
         cContent?: string;
         cContentMerge?: string;
-        /** @default 'z-20' */
+        /** @default 'z-10' */
         cZ?: string;
     };
     popup?: {
@@ -30,7 +30,7 @@ export interface Defaults {
         /** Style the root popup element. Preferrably style `cContent` if possible. */
         cPopup?: string;
         cPopupMerge?: string;
-        /** @default 'z-20' */
+        /** @default 'z-10' */
         cZ?: string;
     };
     popupSettings?: Omit<PopupSettings, 'state' | 'middleware'>;

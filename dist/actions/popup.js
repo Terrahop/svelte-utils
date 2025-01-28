@@ -62,7 +62,7 @@ export const popup = (triggerNode, args) => {
             // https://floating-ui.com/docs/middleware#ordering
             middleware: [
                 // https://floating-ui.com/docs/offset
-                offset(args.middleware?.offset ?? 4),
+                offset(args.middleware?.offset ?? 8),
                 // https://floating-ui.com/docs/shift
                 shift(args.middleware?.shift ?? { padding: 8 }),
                 // https://floating-ui.com/docs/flip
@@ -80,6 +80,7 @@ export const popup = (triggerNode, args) => {
             // Handle Arrow Placement:
             // https://floating-ui.com/docs/arrow
             if (elemArrow) {
+                console.log('arrow?');
                 const { x: arrowX, y: arrowY } = middlewareData.arrow;
                 // @ts-expect-error implicit any
                 const staticSide = {
@@ -207,6 +208,7 @@ export const popup = (triggerNode, args) => {
             args.closeOnMouseDown && window.addEventListener('mousedown', onWindowClick, true);
             break;
         case 'hover':
+            // triggerNode.addEventListener('click', () => close(), true)
             triggerNode.addEventListener('mouseover', open, true);
             triggerNode.addEventListener('mouseleave', () => close(), true);
             break;
@@ -227,11 +229,14 @@ export const popup = (triggerNode, args) => {
     // Lifecycle
     return {
         update(newArgs) {
-            close(() => {
-                args = newArgs;
-                render();
-                setDomElements();
-            });
+            args = newArgs;
+            render();
+            setDomElements();
+            // close(() => {
+            //   args = newArgs
+            //   render()
+            //   setDomElements()
+            // })
         },
         destroy() {
             // Trigger Events
@@ -243,7 +248,7 @@ export const popup = (triggerNode, args) => {
             triggerNode.removeEventListener('blur', () => close(), true);
             // Window Events
             window.removeEventListener('click', onWindowClick, true);
-            args.closeOnMouseDown && window.removeEventListener('mousedown', onWindowClick, true);
+            window.removeEventListener('mousedown', onWindowClick, true);
             window.removeEventListener('keydown', onWindowKeyDown, true);
         }
     };

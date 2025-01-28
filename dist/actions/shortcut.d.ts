@@ -1,3 +1,4 @@
+import type { Action } from 'svelte/action';
 interface ShortcutParams {
     alt?: boolean;
     shift?: boolean;
@@ -19,8 +20,5 @@ interface ShortcutParams {
  * }}></div>
  * ```
  */
-export declare const shortcut: (element: HTMLElement, params: ShortcutParams) => {
-    update: () => void;
-    destroy: () => void;
-};
+export declare const shortcut: Action<HTMLElement, ShortcutParams>;
 export {};
