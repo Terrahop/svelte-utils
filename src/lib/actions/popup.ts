@@ -118,7 +118,7 @@ export const popup = (triggerNode: HTMLElement, args: PopupSettings) => {
       // https://floating-ui.com/docs/middleware#ordering
       middleware: [
         // https://floating-ui.com/docs/offset
-        offset(args.middleware?.offset ?? 4),
+        offset(args.middleware?.offset ?? 8),
         // https://floating-ui.com/docs/shift
         shift(args.middleware?.shift ?? { padding: 8 }),
         // https://floating-ui.com/docs/flip
@@ -255,7 +255,7 @@ export const popup = (triggerNode: HTMLElement, args: PopupSettings) => {
     case 'click':
       triggerNode.addEventListener('click', toggle, true)
       window.addEventListener('click', onWindowClick, true)
-      args.closeOnMouseDown &&  window.addEventListener('mousedown', onWindowClick, true)
+      args.closeOnMouseDown && window.addEventListener('mousedown', onWindowClick, true)
       break
     case 'hover':
       triggerNode.addEventListener('mouseover', open, true)
@@ -280,11 +280,9 @@ export const popup = (triggerNode: HTMLElement, args: PopupSettings) => {
   // Lifecycle
   return {
     update(newArgs: PopupSettings) {
-      close(() => {
-        args = newArgs
-        render()
-        setDomElements()
-      })
+      args = newArgs
+      render()
+      setDomElements()
     },
     destroy() {
       // Trigger Events
@@ -296,7 +294,7 @@ export const popup = (triggerNode: HTMLElement, args: PopupSettings) => {
       triggerNode.removeEventListener('blur', () => close(), true)
       // Window Events
       window.removeEventListener('click', onWindowClick, true)
-      args.closeOnMouseDown && window.removeEventListener('mousedown', onWindowClick, true)
+      window.removeEventListener('mousedown', onWindowClick, true)
       window.removeEventListener('keydown', onWindowKeyDown, true)
     }
   }
