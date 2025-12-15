@@ -12,11 +12,11 @@ const getStorage = (session: boolean): Storage => {
 
 /**
  * Get a value for the a storage.
- * @param session - Local storage type.
  * @param key - Key to get value for.
+ * @param session - Local storage type.
  * @returns Either session or local storage.
  */
-const getStorageValue = (session: boolean, key: string): unknown => {
+const getStorageValue = (key: string, session = false): unknown => {
   const json = isBrowser ? getStorage(session).getItem(key) ?? undefined : undefined
   let value: unknown
   if (json && json !== 'undefined') {
@@ -29,12 +29,31 @@ const getStorageValue = (session: boolean, key: string): unknown => {
   return value
 }
 
+const removeStorageValue = (key: string, session = false) => {
+  getStorage(session).removeItem(key)
+}
+
 const localStoreCreate = () => {
   const stores = $state<Record<string, { session: boolean, value: unknown } | undefined>>({})
 
+  const cleanup = $effect.root(() => {
+    if (isBrowser) {
+      $effect(() => {
+        for (const [key, value] of Object.entries(stores)) {
+          if (!value) continue
+          // Only update the storage if the value has changed
+          if (JSON.stringify(getStorageValue(key, value.session)) !== JSON.stringify(value.value)) {
+            const storage = getStorage(value.session)
+            storage.setItem(key, JSON.stringify(value.value))
+          }
+        }
+      })
+    }
+  })
+
   return {
     create<T>(name: string, initial?: T, session = false) {
-      const value = getStorageValue(session, name)
+      const value = getStorageValue(name, session)
       stores[name] = { session, value: value ?? initial }
 
       return {
@@ -54,32 +73,35 @@ const localStoreCreate = () => {
         }
       }
     },
+    remove(name: string) {
+      const store = stores[name]
+      stores[name] = undefined
+      removeStorageValue(name, store?.session)
+    },
     clear() {
       if (isBrowser) {
         localStorage.clear()
         sessionStorage.clear()
       }
     },
+    /**
+     * Subscribe to an effect which syncs the value to localStorage.
+     * @deprecated Not needed anymore.
+     */
     subscribe() {
-      if (isBrowser) {
-        $effect(() => {
-          for (const [key, value] of Object.entries(stores)) {
-            if (!value) continue
-            // Only update the storage if the value has changed
-            if (JSON.stringify(getStorageValue(value.session, key)) !== JSON.stringify(value.value)) {
-              const storage = getStorage(value.session)
-              storage.setItem(key, JSON.stringify(value.value))
-            }
-          }
-        })
-      }
+      console.info('localStore.subsribe() is no longer necessary')
+    },
+    /**
+     * Cleanup the root effect.
+     */
+    cleanup() {
+      cleanup()
     }
   }
 }
 
 /**
  * A svelte Rune that persists it's state using either the session storage or local storage.
- * TODO: document.
  * @returns Rune getters and setters.
  */
 export const localStore = localStoreCreate()
