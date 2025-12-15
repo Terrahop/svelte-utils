@@ -1,6 +1,5 @@
 /**
  * A svelte Rune that persists it's state using either the session storage or local storage.
- * TODO: document.
  * @returns Rune getters and setters.
  */
 export declare const localStore: {
@@ -9,6 +8,15 @@ export declare const localStore: {
         set(v: T): void;
         update(updater: (value: T) => T): void;
     };
+    remove(name: string): void;
     clear(): void;
+    /**
+     * Subscribe to an effect which syncs the value to localStorage.
+     * @deprecated Not needed anymore.
+     */
     subscribe(): void;
+    /**
+     * Cleanup the root effect.
+     */
+    cleanup(): void;
 };

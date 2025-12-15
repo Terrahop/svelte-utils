@@ -10,11 +10,11 @@ const getStorage = (session) => {
 };
 /**
  * Get a value for the a storage.
- * @param session - Local storage type.
  * @param key - Key to get value for.
+ * @param session - Local storage type.
  * @returns Either session or local storage.
  */
-const getStorageValue = (session, key) => {
+const getStorageValue = (key, session = false) => {
     const json = isBrowser ? getStorage(session).getItem(key) ?? undefined : undefined;
     let value;
     if (json && json !== 'undefined') {
@@ -27,11 +27,29 @@ const getStorageValue = (session, key) => {
     }
     return value;
 };
+const removeStorageValue = (key, session = false) => {
+    getStorage(session).removeItem(key);
+};
 const localStoreCreate = () => {
     const stores = $state({});
+    const cleanup = $effect.root(() => {
+        if (isBrowser) {
+            $effect(() => {
+                for (const [key, value] of Object.entries(stores)) {
+                    if (!value)
+                        continue;
+                    // Only update the storage if the value has changed
+                    if (JSON.stringify(getStorageValue(key, value.session)) !== JSON.stringify(value.value)) {
+                        const storage = getStorage(value.session);
+                        storage.setItem(key, JSON.stringify(value.value));
+                    }
+                }
+            });
+        }
+    });
     return {
         create(name, initial, session = false) {
-            const value = getStorageValue(session, name);
+            const value = getStorageValue(name, session);
             stores[name] = { session, value: value ?? initial };
             return {
                 get get() {
@@ -50,32 +68,34 @@ const localStoreCreate = () => {
                 }
             };
         },
+        remove(name) {
+            const store = stores[name];
+            stores[name] = undefined;
+            removeStorageValue(name, store?.session);
+        },
         clear() {
             if (isBrowser) {
                 localStorage.clear();
                 sessionStorage.clear();
             }
         },
+        /**
+         * Subscribe to an effect which syncs the value to localStorage.
+         * @deprecated Not needed anymore.
+         */
         subscribe() {
-            if (isBrowser) {
-                $effect(() => {
-                    for (const [key, value] of Object.entries(stores)) {
-                        if (!value)
-                            continue;
-                        // Only update the storage if the value has changed
-                        if (JSON.stringify(getStorageValue(value.session, key)) !== JSON.stringify(value.value)) {
-                            const storage = getStorage(value.session);
-                            storage.setItem(key, JSON.stringify(value.value));
-                        }
-                    }
-                });
-            }
+            console.info('localStore.subsribe() is no longer necessary');
+        },
+        /**
+         * Cleanup the root effect.
+         */
+        cleanup() {
+            cleanup();
         }
     };
 };
 /**
  * A svelte Rune that persists it's state using either the session storage or local storage.
- * TODO: document.
  * @returns Rune getters and setters.
  */
 export const localStore = localStoreCreate();

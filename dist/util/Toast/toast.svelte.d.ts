@@ -25,7 +25,7 @@ export interface ToastItem {
     actionText?: string;
 }
 /** Keep track of all toasts. */
-export declare const toasts: import("../../types").StateRune<ToastItem[]>;
+export declare const toasts: import("../../types.js").StateRune<ToastItem[]>;
 export declare const toast: {
     clear: () => void;
     trigger: ({ title, message, duration, closable, type, action, actionText }: Partial<Omit<ToastItem, "id">>) => string;

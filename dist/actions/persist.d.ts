@@ -4,7 +4,7 @@ interface BasePersistConfig {
      * The event to listen to for persisting the form state.
      * @default 'input'
      */
-    persistOn?: 'input' | 'change' | 'blur-xs';
+    persistOn?: 'input' | 'change' | 'blur';
     /**
      * Setting this to `false` will cause the password fields to be persisted. Highly discouraged.
      *

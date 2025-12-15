@@ -334,6 +334,6 @@
   {/key}
 {/if}
 
-<style>/*! tailwindcss v4.0.0 | MIT License | https://tailwindcss.com */
+<style>/*! tailwindcss v4.1.18 | MIT License | https://tailwindcss.com */
 .w-modal-slim{width:100%;max-width:400px}.w-modal{width:100%;max-width:640px}.w-modal-wide{width:100%;max-width:80%}.modal :focus:not([tabindex="-1"]):not(.input):not(.textarea):not(.select):not(.input-group):not(.input-group input){outline-style:auto;outline-color:-webkit-focus-ring-color}
 </style>

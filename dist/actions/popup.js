@@ -212,7 +212,7 @@ export const popup = (triggerNode, args) => {
             break;
         case 'focus-blur':
             triggerNode.addEventListener('focus', toggle, true);
-            triggerNode.addEventListener('blur-xs', () => close(), true);
+            triggerNode.addEventListener('blur', () => close(), true);
             break;
         case 'focus-click':
             triggerNode.addEventListener('focus', open, true);
@@ -238,7 +238,7 @@ export const popup = (triggerNode, args) => {
             triggerNode.removeEventListener('mouseleave', () => close(), true);
             triggerNode.removeEventListener('focus', toggle, true);
             triggerNode.removeEventListener('focus', open, true);
-            triggerNode.removeEventListener('blur-xs', () => close(), true);
+            triggerNode.removeEventListener('blur', () => close(), true);
             // Window Events
             window.removeEventListener('click', onWindowClick, true);
             window.removeEventListener('mousedown', onWindowClick, true);
