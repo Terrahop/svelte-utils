@@ -6,11 +6,92 @@ and will hide when navigation is complete.
 
 original: https://github.com/saibotsivad/svelte-progress-bar
 adapted: https://github.com/prgm-dev/sveltekit-progress-bar
-this version: improved some types, added more docs and refactors styles so they can be optmized by svelte.
+this version: improved some types, converted to svelte 5 runes, added more docs and refactors styles so they can be optmized by svelte.
 @author https://github.com/terrahop
 -->
 <script lang="ts">
   import { afterNavigate, beforeNavigate } from '$app/navigation'
+
+  interface Props {
+    /** Will be set to true when the progress bar is running. */
+    busy?: boolean
+    /**
+     * The CSS color to use to style the progress bar.
+     *
+     * If you're using Tailwind or Windi CSS, leave this to the default
+     * and set the `class` attribute to a `text-` class instead.
+     * @default 'currentColor'
+     */
+    color?: string
+    /**
+     * When navigating, this is the threshold duration in milliseconds
+     * that the progress bar will wait before showing.
+     *
+     * This means that if the navigation takes less than this amount of time,
+     * the progress bar will not be shown. This is to prevent the progress bar
+     * from flashing in and out on the screen.
+     * @default 150 ms
+     */
+    displayThresholdMs?: number
+    /**
+     * If set, an ID for the progress bar on the HTML page.
+     * This ID must be unique on the page to avoid conflicts.
+     *
+     * Might be used with another element to signal to assistive technologies that
+     * progress is ongoing.
+     * @example
+     * <ProgressBar id="my-progress-bar" bind:busy />
+     * <div aria-busy={busy} aria-describedby="my-progress-bar">
+     *  A div that is currently loading...
+     * </div>
+     */
+    id?: string
+    /**
+     * Milliseconds to wait between incrementing bar width when using
+     * the `start` (auto-increment) method.
+     * @default 700
+     */
+    intervalTime?: number
+    /**
+     * The maximum percent width value to use when the bar is at the end but not marked as complete.
+     * Letting the bar stay at 100% width for a while doesn't usually look very good either.
+     * @default 0.994
+     */
+    maximum?: number
+    /**
+     * The starting percent width use when the bar starts.
+     * Starting at 0 doesn't usually look very good.
+     * @default 0.08
+     */
+    minimum?: number
+    /** Set to `true` to disable the showing of the progress bar on navigation. */
+    noNavigationProgress?: boolean
+    /** @default [0, 0.005, 0.01, 0.02] */
+    stepSizes?: number[]
+
+    /**
+     * Milliseconds to wait after the complete method is called to hide the progress bar.
+     * Letting it sit at 100% width for a very short time makes it feel more fluid.
+     * @default 700
+     */
+    settleTime?: number
+    /**
+     * The `z-index` CSS property value to use for the progress bar.
+     * Be aware that the glowing effect on the bar will use this `zIndex` + 1.
+     * @default 1
+     */
+    zIndex?: number
+    /**
+     * A Tailwind `text-` class to use to color the Progress Bar.
+     *
+     * This prop will be ignored if the `color` prop is set to something other than `currentColor`.
+     *
+     * **WARNING**: Do not set this prop with something other than a `text-` class,
+     * as it could interfere with the styling of the Progress Bar.
+     * @example text-green-500
+     */
+    class?: string
+  }
 
   // Towards the end of the progress bar animation, we want to shorten the increment
   // step size, to give it the appearance of slowing down. This indicates to the user
@@ -24,109 +105,34 @@ this version: improved some types, added more docs and refactors styles so they 
   }
 
   // Internal private state.
-  let running = false
   let updater: ReturnType<typeof setInterval> | undefined
-  let completed = false
-  let width = 0
+  let completed = $state(false)
+  let width = $state(0)
 
-  /**
-   * Milliseconds to wait between incrementing bar width when using
-   * the `start` (auto-increment) method.
-   * @default 700
-   */
-  export let intervalTime = 700
-  export let stepSizes = [0, 0.005, 0.01, 0.02]
+  let {
+    intervalTime = 700,
+    stepSizes = [0, 0.005, 0.01, 0.02],
+    busy = $bindable(false),
+    class: cls = '',
+    color = 'currentColor',
+    displayThresholdMs = 150,
+    id,
+    maximum = 0.994,
+    minimum = 0.08,
+    noNavigationProgress = false,
+    settleTime = 700,
+    zIndex = 1,
+  }: Props = $props()
 
-  /**
-   * When navigating, this is the threshold duration in milliseconds
-   * that the progress bar will wait before showing.
-   *
-   * This means that if the navigation takes less than this amount of time,
-   * the progress bar will not be shown. This is to prevent the progress bar
-   * from flashing in and out on the screen.
-   * @default 150 ms
-   */
-  export let displayThresholdMs = 150
 
-  /** Set to `true` to disable the showing of the progress bar on navigation. */
-  export let noNavigationProgress = false
-
-  /**
-   * If set, an ID for the progress bar on the HTML page.
-   * This ID must be unique on the page to avoid conflicts.
-   *
-   * Might be used with another element to signal to assistive technologies that
-   * progress is ongoing.
-   * @example
-   * <ProgressBar id="my-progress-bar" bind:busy />
-   * <div aria-busy={busy} aria-describedby="my-progress-bar">
-   *  A div that is currently loading...
-   * </div>
-   */
-  export let id: string | undefined
-
-  /** Will be set to true when the progress bar is running. */
-  export let busy = false
-
-  $: running = busy
-  /**
-   * The CSS color to use to style the progress bar.
-   *
-   * If you're using Tailwind or Windi CSS, leave this to the default
-   * and set the `class` attribute to a `text-` class instead.
-   */
-  export let color = 'currentColor'
-
-  /**
-   * A Tailwind `text-` class to use to color the Progress Bar.
-   *
-   * This prop will be ignored if the `color` prop is set to something other than `currentColor`.
-   *
-   * **WARNING**: Do not set this prop with something other than a `text-` class,
-   * as it could interfere with the styling of the Progress Bar.
-   * @example text-green-500
-   */
-  let textColorClass: `text-${string}` | '' = ''
-
-  export { textColorClass as class }
-
-  /**
-   * The `z-index` CSS property value to use for the progress bar.
-   * Be aware that the glowing effect on the bar will use this `zIndex` + 1.
-   */
-  export let zIndex = 1
-
-  // These are defaults that you shouldn't need to change, but are exposed here in case you do.
-
-  /**
-   * The starting percent width use when the bar starts.
-   * Starting at 0 doesn't usually look very good.
-   * @default 0.08
-   */
-  let defaultMinimum = 0.08
-  export { defaultMinimum as minimum }
-
-  /**
-   * The maximum percent width value to use when the bar is at the end but not marked as complete.
-   * Letting the bar stay at 100% width for a while doesn't usually look very good either.
-   * @default 0.994
-   */
-  export let maximum = 0.994
-
-  /**
-   * Milliseconds to wait after the complete method is called to hide the progress bar.
-   * Letting it sit at 100% width for a very short time makes it feel more fluid.
-   * @default 700
-   */
-  let defaultSettleTime = 700
-  export { defaultSettleTime as settleTime }
+  let running = $derived(busy)
 
   /**
    * Reset the progress bar back to the beginning, leaving it in a running state.
-   * @param minimum - Progress value to start at.
+   * @param minimumL - Progress value to start at.
    */
-  export const reset = (minimum = defaultMinimum): void => {
-    width = minimum
+  export const reset = (minimumL = minimum): void => {
+    width = minimumL
     running = true
   }
 
@@ -173,9 +179,9 @@ this version: improved some types, added more docs and refactors styles so they 
   /**
    * Moves the progress bar to the fully completed position, wait an appropriate
    * amount of time so the user can feel the completion, then hide and reset.
-   * @param settleTime - Time to wait before hiding.
+   * @param settleTimeL - Time to wait before hiding.
    */
-  export const complete = (settleTime = defaultSettleTime): void => {
+  export const complete = (settleTimeL = settleTime): void => {
     if (updater) clearInterval(updater)
     if (!running) return
     width = 1
@@ -187,8 +193,8 @@ this version: improved some types, added more docs and refactors styles so they 
         // after some time (long enough to finish the hide animation) reset it back to 0
         completed = false
         width = 0
-      }, settleTime)
-    }, settleTime)
+      }, settleTimeL)
+    }, settleTimeL)
   }
 
   /**
@@ -209,11 +215,11 @@ this version: improved some types, added more docs and refactors styles so they 
       running,
       completed,
       color,
-      defaultMinimum,
+      minimum,
       maximum,
-      defaultSettleTime,
+      settleTime,
       intervalTime,
-      stepSizes
+      stepSizes,
     }
   }
 
@@ -231,6 +237,7 @@ this version: improved some types, added more docs and refactors styles so they 
         // Schedule a display of the progress bar in `displayThresholdMs` milliseconds.
         // This is to avoid flickering/flashing when the navigation is fast.
         progressBarStartTimeout = setTimeout(() => {
+          // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
           if (!noNavigationProgress) start()
         }, displayThresholdMs)
       } else start()
@@ -253,15 +260,19 @@ this version: improved some types, added more docs and refactors styles so they 
     aria-valuenow={width}
     aria-valuemin={0}
     aria-valuemax={1}
-    class="svelte-progress-bar {textColorClass}"
+    class="svelte-progress-bar {cls}"
     class:running
     class:svelte-progress-bar-hiding={completed}
-    style="background-color: {color}; width: {width * 100}%; z-index: {zIndex};"
+    style:background-color={color}
+    style:z-index={zIndex}
+    style:width="{width * 100}%"
   >
     {#if running}
       <div
         class="svelte-progress-bar-leader"
-        style="background-color: {color}; color: {color}; z-index: {zIndex + 1};"
+        style:background-color={color}
+        style:z-index={zIndex + 1}
+        style:color
       ></div>
     {/if}
   </output>
