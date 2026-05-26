@@ -1,79 +1,80 @@
 {
-	"name": "@terrahop/svelte-utils",
-	"version": "2.4.0",
-	"license": "MIT",
-	"private": true,
-	"scripts": {
-		"dev": "vite dev",
-		"build": "vite build && npm run package",
-		"preview": "vite preview",
-		"package": "svelte-kit sync && svelte-package && publint",
-		"package:watch": "svelte-package -w",
-		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
-		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
-		"lint": "eslint --max-warnings=0 --no-warn-ignored ./src"
-	},
-	"files": [
-		"dist",
-		"!dist/**/*.test.*",
-		"!dist/**/*.spec.*"
-	],
-	"sideEffects": [
-		"**/*.css"
-	],
-	"svelte": "./dist/index.js",
-	"types": "./dist/index.d.ts",
-	"type": "module",
-	"exports": {
-		".": {
-			"types": "./dist/index.d.ts",
-			"svelte": "./dist/index.js"
-		},
-		"./actions": {
-			"types": "./dist/actions/index.d.ts",
-			"svelte": "./dist/actions/index.js"
-		},
-		"./components": {
-			"types": "./dist/components/index.d.ts",
-			"svelte": "./dist/components/index.js"
-		},
-		"./stores": {
-			"types": "./dist/stores/index.d.ts",
-			"svelte": "./dist/stores/index.js"
-		},
-		"./util": {
-			"types": "./dist/util/index.d.ts",
-			"svelte": "./dist/util/index.js"
-		}
-	},
-	"peerDependencies": {
-		"@sveltejs/kit": "2.0.0",
-		"svelte": "5.55.5"
-	},
-	"devDependencies": {
-		"@floating-ui/dom": "1.7.6",
-		"@steeze-ui/heroicons": "^2.4.2",
-		"@steeze-ui/svelte-icon": "^1.6.2",
-		"@sveltejs/adapter-auto": "7.0.1",
-		"@sveltejs/kit": "2.59.1",
-		"@sveltejs/package": "2.5.7",
-		"@sveltejs/vite-plugin-svelte": "7.1.2",
-		"@tailwindcss/vite": "^4.2.4",
-		"@terrahop/eslint-config-svelte": "github:Terrahop/eslint-config-svelte#v1.2.0",
-		"daisyui": "5.5.19",
-		"eslint": "10.3.0",
-		"eslint-config-prettier": "10.1.8",
-		"eslint-plugin-svelte": "3.17.1",
-		"postcss": "8.5.14",
-		"prettier": "3.8.3",
-		"prettier-plugin-svelte": "3.5.1",
-		"prettier-plugin-tailwindcss": "0.8.0",
-		"publint": "0.3.20",
-		"svelte": "5.55.5",
-		"svelte-check": "4.4.8",
-		"tailwindcss": "4.2.4",
-		"typescript": "6.0.3",
-		"typescript-svelte-plugin": "0.3.52",
-		"vite": "8.0.11"
-	}
+  "name": "@terrahop/svelte-utils",
+  "version": "2.4.0",
+  "private": true,
+  "license": "MIT",
+  "files": [
+    "dist",
+    "!dist/**/*.test.*",
+    "!dist/**/*.spec.*"
+  ],
+  "type": "module",
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "types": "./dist/index.d.ts",
+  "svelte": "./dist/index.js",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "svelte": "./dist/index.js"
+    },
+    "./actions": {
+      "types": "./dist/actions/index.d.ts",
+      "svelte": "./dist/actions/index.js"
+    },
+    "./components": {
+      "types": "./dist/components/index.d.ts",
+      "svelte": "./dist/components/index.js"
+    },
+    "./stores": {
+      "types": "./dist/stores/index.d.ts",
+      "svelte": "./dist/stores/index.js"
+    },
+    "./util": {
+      "types": "./dist/util/index.d.ts",
+      "svelte": "./dist/util/index.js"
+    }
+  },
+  "scripts": {
+    "dev": "vp dev",
+    "build": "vp build && npm run package",
+    "preview": "vp preview",
+    "package": "svelte-kit sync && svelte-package && publint",
+    "package:watch": "svelte-package -w",
+    "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+    "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
+    "lint": "eslint --max-warnings=0 --no-warn-ignored ./src",
+    "prepare": "vp config"
+  },
+  "devDependencies": {
+    "@floating-ui/dom": "1.7.6",
+    "@steeze-ui/heroicons": "2.4.2",
+    "@steeze-ui/svelte-icon": "1.6.2",
+    "@sveltejs/adapter-auto": "7.0.1",
+    "@sveltejs/kit": "2.61.1",
+    "@sveltejs/package": "2.5.7",
+    "@sveltejs/vite-plugin-svelte": "7.1.2",
+    "@tailwindcss/vite": "4.3.0",
+    "@terrahop/oxc-config-svelte": "github:terrahop/oxc-config-svelte",
+    "@terrahop/svelte-utils": "github:terrahop/svelte-utils",
+    "@types/node": "25.9.1",
+    "daisyui": "5.5.20",
+    "oxfmt": "0.51.0",
+    "oxlint": "1.66.0",
+    "postcss": "8.5.15",
+    "publint": "0.3.21",
+    "svelte": "5.55.9",
+    "svelte-check": "4.4.8",
+    "tailwindcss": "4.3.0",
+    "typescript": "6.0.3",
+    "typescript-svelte-plugin": "0.3.52",
+    "vite": "catalog:",
+    "vite-plus": "catalog:"
+  },
+  "peerDependencies": {
+    "@sveltejs/kit": "2.0.0",
+    "svelte": "5.55.5"
+  },
+  "packageManager": "pnpm@11.3.0"
 }
