@@ -121,8 +121,10 @@ export const popup = (triggerNode, args) => {
         // Focus the first focusable element within the popup
         focusablePopupElements = [...(elemPopup.querySelectorAll(focusableAllowedList))];
     };
-    const close = (callback) => {
+    const close = (event, callback) => {
         if (!elemPopup)
+            return;
+        if (triggerNode.contains(event?.relatedTarget))
             return;
         // Set transition duration
         const cssTransitionDuration = Number.parseFloat(window.getComputedStyle(elemPopup).transitionDuration.replace('s', '')) * 1000;
@@ -207,8 +209,8 @@ export const popup = (triggerNode, args) => {
             args.closeOnMouseDown && window.addEventListener('mousedown', onWindowClick, true);
             break;
         case 'hover':
-            triggerNode.addEventListener('mouseover', open, true);
-            triggerNode.addEventListener('mouseleave', () => close(), true);
+            triggerNode.addEventListener('mouseenter', open, true);
+            triggerNode.addEventListener('mouseleave', (e) => close(e), true);
             break;
         case 'focus-blur':
             triggerNode.addEventListener('focus', toggle, true);
@@ -234,8 +236,8 @@ export const popup = (triggerNode, args) => {
         destroy() {
             // Trigger Events
             triggerNode.removeEventListener('click', toggle, true);
-            triggerNode.removeEventListener('mouseover', open, true);
-            triggerNode.removeEventListener('mouseleave', () => close(), true);
+            triggerNode.removeEventListener('mouseenter', open, true);
+            triggerNode.removeEventListener('mouseleave', (e) => close(e), true);
             triggerNode.removeEventListener('focus', toggle, true);
             triggerNode.removeEventListener('focus', open, true);
             triggerNode.removeEventListener('blur', () => close(), true);

@@ -1,5 +1,5 @@
 import { getContext, setContext } from 'svelte'
-import type { PopupSettings } from './actions/popup.js'
+import type { PopupSettings } from './util/Popup/popup.ts'
 
 const defaultsKey = Symbol('defaults')
 
@@ -28,7 +28,7 @@ export interface Defaults {
     classMerge?: string
     /**
      * Style the popup content element.
-     * @default 'rounded-box border border-light bg-base-100 p-sm shadow-lg'
+     * @default 'rounded-box border border-base-content/5 bg-base-100 p-2'
      */
     cContent?: string
     cContentMerge?: string

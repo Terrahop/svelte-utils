@@ -101,7 +101,7 @@
   export let transitionOutParams: TransitionParams<TransitionOut> = { duration: 150, opacity: 0, x: 0, y: 100 }
 
   // Base Styles
-  const cBackdrop = 'fixed z-0 top-0 left-0 right-0 bottom-0 bg-base-200/60 p-4'
+  const cBackdrop = 'fixed inset-0 z-0 bg-base-200/60 p-4'
   const cTransitionLayer = 'w-full h-fit min-h-full overflow-y-auto flex justify-center'
   const cModal = 'block overflow-y-auto' // max-h-full overflow-y-auto overflow-x-hidden
   const cModalImage = 'w-full h-auto'
@@ -334,6 +334,22 @@
   {/key}
 {/if}
 
-<style>/*! tailwindcss v4.1.18 | MIT License | https://tailwindcss.com */
-.w-modal-slim{width:100%;max-width:400px}.w-modal{width:100%;max-width:640px}.w-modal-wide{width:100%;max-width:80%}.modal :focus:not([tabindex="-1"]):not(.input):not(.textarea):not(.select):not(.input-group):not(.input-group input){outline-style:auto;outline-color:-webkit-focus-ring-color}
+<style>
+  .w-modal-slim {
+    @apply w-full max-w-[400px];
+  }
+
+  .w-modal {
+    @apply w-full max-w-[640px];
+  }
+
+  .w-modal-wide {
+    @apply w-full max-w-[80%];
+  }
+
+  /* Provides initial focus selection styles on opening the modal */
+  .modal *:focus:not([tabindex='-1']):not(.input):not(.textarea):not(.select):not(.input-group):not(.input-group input) {
+    outline-style: auto;
+    @apply outline-[-webkit-focus-ring-color];
+  }
 </style>

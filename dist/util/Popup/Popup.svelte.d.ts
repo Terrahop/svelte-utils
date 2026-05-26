@@ -1,7 +1,7 @@
 import './popup.css';
-import type { PopupSettings } from '../../index.js';
+import type { PopupSettings } from './popup.ts';
 import { type DefaultPopup } from '../../defaults.js';
-import { popup as popupAction } from '../../actions/popup.js';
+import { popup as popupAction } from './popup.ts';
 import type { Snippet } from 'svelte';
 interface Props extends Omit<Partial<PopupSettings>, 'target' | 'state'>, DefaultPopup {
     content?: Snippet;

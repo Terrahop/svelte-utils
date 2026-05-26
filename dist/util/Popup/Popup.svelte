@@ -26,11 +26,11 @@ Popup Component. Draws a floating popup when the provided snippet toggle is trig
 </script>
 
 <script lang="ts">
-  import type { PopupSettings } from '../../index.js'
+  import type { PopupSettings } from './popup.js'
   import { getDefaults, type DefaultPopup } from '../../defaults.js'
   import { ChevronDown, ChevronUp } from '@steeze-ui/heroicons'
   import { Icon } from '@steeze-ui/svelte-icon'
-  import { popup as popupAction } from '../../actions/popup.js'
+  import { popup as popupAction } from './popup.js'
   import type { Snippet } from 'svelte'
   import { random } from '../../helpers.js'
   import { fade } from 'svelte/transition'

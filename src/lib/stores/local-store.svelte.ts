@@ -100,6 +100,8 @@ const localStoreCreate = () => {
   }
 }
 
+export type LocalStore = typeof localStore.create
+
 /**
  * A svelte Rune that persists it's state using either the session storage or local storage.
  * @returns Rune getters and setters.

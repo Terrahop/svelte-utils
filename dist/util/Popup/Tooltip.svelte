@@ -1,9 +1,9 @@
 <script lang="ts">
-  import type { PopupSettings } from '../../index.js'
   import type { Placement } from '@floating-ui/dom'
   import type { Snippet } from 'svelte'
   import Popup from './Popup.svelte'
   import { getDefaults, type DefaultTooltip } from '../../defaults.js'
+  import type { PopupSettings } from './popup.js'
 
   interface Props extends Pick<PopupSettings, 'placement'>, DefaultTooltip {
     children: Snippet
