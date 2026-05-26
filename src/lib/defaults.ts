@@ -1,5 +1,5 @@
-import { getContext, setContext } from 'svelte'
 import type { PopupSettings } from './util/Popup/popup.ts'
+import { getContext, setContext } from 'svelte'
 
 const defaultsKey = Symbol('defaults')
 
@@ -42,12 +42,13 @@ export interface Defaults {
 }
 
 export type DefaultPopup = Omit<NonNullable<Defaults['popup']>, ExtractMerge<keyof NonNullable<Defaults['popup']>>>
-export type DefaultTooltip = Omit<NonNullable<Defaults['tooltip']>, ExtractMerge<keyof NonNullable<Defaults['tooltip']>>>
+export type DefaultTooltip = Omit<
+  NonNullable<Defaults['tooltip']>,
+  ExtractMerge<keyof NonNullable<Defaults['tooltip']>>
+>
 
 export const setDefaults = (value: Defaults) => {
   setContext<Defaults>(defaultsKey, value)
 }
 
-export const getDefaults = () => {
-  return getContext<Defaults | undefined>(defaultsKey) ?? {}
-}
+export const getDefaults = () => getContext<Defaults | undefined>(defaultsKey) ?? {}
