@@ -1,16 +1,25 @@
 {
   "extends": "./.svelte-kit/tsconfig.json",
   "compilerOptions": {
-    "rewriteRelativeImportExtensions": true,
+    /* Basic Options */
+    "target": "ES2022",
     "allowJs": true,
     "checkJs": true,
-    "forceConsistentCasingInFileNames": true,
-    "resolveJsonModule": true,
-    "skipLibCheck": true,
     "sourceMap": true,
-    "strict": true,
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext",
+    "skipLibCheck": true,
+    "rewriteRelativeImportExtensions": true,
+    "forceConsistentCasingInFileNames": true,
+    // "noEmit": true,
+    /* Additional Checks */
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    /* Module Resolution Options */
+    "resolveJsonModule": true,
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
+    "useDefineForClassFields": true,
+    "esModuleInterop": true,
+    "verbatimModuleSyntax": true,
     "plugins": [
       {
         "name": "typescript-svelte-plugin",

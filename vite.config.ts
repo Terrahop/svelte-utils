@@ -10,9 +10,6 @@ export default defineConfig({
   },
   fmt,
   lint,
-  pack: {
-    publint: true,
-  },
   plugins: [tailwindcss(), sveltekit()],
   staged: {
     '*': 'vp check --fix',
